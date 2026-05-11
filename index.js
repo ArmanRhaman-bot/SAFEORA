@@ -102,7 +102,7 @@ app.post("/usdt/send", async (req, res) => {
 
         ethers.parseUnits(
           amount.toString(),
-          18
+          6
         )
 
       )
