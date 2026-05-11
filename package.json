@@ -1,0 +1,15 @@
+{
+  "name": "safeora-bep20",
+  "version": "1.0.0",
+  "main": "index.js",
+
+  "scripts": {
+    "start": "node index.js"
+  },
+
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2"
+  }
+}
