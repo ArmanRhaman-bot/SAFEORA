@@ -1,229 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAFEORA Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>SAFEORA | Admin Vault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    body {
+      background: radial-gradient(circle at 10% 20%, #0B0E17, #05070C);
+      font-family: 'Inter', sans-serif;
+      color: #F1F5F9;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
 
-<style>
-body{
-  background:#0a0c12;
-  color:#fff;
-  font-family:'Inter',sans-serif;
-  padding:20px;
-}
+    .glass-container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
 
-.container{
-  max-width:600px;
-  margin:auto;
-}
+    /* header area */
+    .admin-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+    }
 
-.card{
-  background:#111827;
-  padding:20px;
-  border-radius:20px;
-  margin-bottom:20px;
-  border:1px solid #1f2a44;
-}
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-input{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border:none;
-  border-radius:12px;
-  background:#1e293b;
-  color:#fff;
-}
+    .logo-icon {
+      background: linear-gradient(135deg, #3B82F6, #2563EB);
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 24px;
+      box-shadow: 0 8px 20px rgba(59,130,246,0.3);
+    }
 
-button{
-  padding:10px 16px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-}
+    .logo-text h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .logo-text span {
+      font-size: 0.8rem;
+      color: #94A3B8;
+    }
 
-.btn{
-  background:#3b82f6;
-  color:white;
-}
+    .wallet-redirect-btn {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      backdrop-filter: blur(4px);
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      transition: all 0.2s;
+      color: #A7F3D0;
+      cursor: pointer;
+    }
+    .wallet-redirect-btn i {
+      margin-right: 8px;
+    }
+    .wallet-redirect-btn:hover {
+      background: #10B981;
+      color: #0B0E17;
+      border-color: #10B981;
+    }
 
-.btn-red{
-  background:#ef4444;
-  color:white;
-}
+    /* login card */
+    .auth-card, .dashboard-grid {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      padding: 28px 32px;
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
+    }
 
-.btn-green{
-  background:#10b981;
-  color:white;
-}
+    .auth-card h2, .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFFFFF, #94A3B8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
 
-.user-box{
-  padding:10px;
-  background:#1e293b;
-  border-radius:12px;
-  margin-top:10px;
-}
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #9CA3AF;
+    }
+    input {
+      width: 100%;
+      background: #0F172A;
+      border: 1px solid #2D3A5E;
+      border-radius: 20px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      color: #F8FAFC;
+      transition: all 0.2s;
+      font-family: 'Inter', monospace;
+    }
+    input:focus {
+      outline: none;
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+    }
+    .btn-primary {
+      background: linear-gradient(95deg, #2563EB, #3B82F6);
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .btn-primary:hover {
+      transform: scale(0.98);
+    }
 
-.tx{
-  font-size:0.8rem;
-  border-bottom:1px solid #1f2a44;
-  padding:6px 0;
-}
-</style>
+    .error-msg {
+      color: #F87171;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    /* dashboard layout */
+    .dashboard-grid {
+      display: none;
+    }
+    .grid-2cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 28px;
+      padding: 20px 24px;
+      border: 1px solid #1E2A47;
+    }
+    .info-card h3 {
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+    .btn-small {
+      background: #2D3A5E;
+      padding: 12px 18px;
+      border-radius: 32px;
+      font-weight: 600;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .btn-success {
+      background: #10B981;
+    }
+    .btn-danger {
+      background: #EF4444;
+    }
+    .btn-info {
+      background: #3B82F6;
+    }
+    .user-detail-card {
+      background: #0A0F1C;
+      border-radius: 24px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .balance-highlight {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #FBBF24;
+    }
+    .tx-item {
+      background: #111827;
+      padding: 10px 14px;
+      border-radius: 16px;
+      margin: 8px 0;
+      font-size: 0.8rem;
+      border-left: 3px solid #3B82F6;
+    }
+    .users-list-scroll {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 16px;
+    }
+    .user-entry {
+      background: #111C2E;
+      margin: 8px 0;
+      padding: 12px 16px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+    }
+    hr {
+      border-color: #1E293B;
+      margin: 12px 0;
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 0.7rem;
+      margin-top: 28px;
+      color: #4B5563;
+    }
+    i {
+      margin-right: 6px;
+    }
+    button {
+      font-family: 'Inter', sans-serif;
+    }
+    @media (max-width: 640px) {
+      .admin-header { flex-direction: column; align-items: start; gap: 12px; }
+      .wallet-redirect-btn { align-self: flex-start; }
+      .auth-card, .dashboard-grid { padding: 20px; }
+    }
+  </style>
 </head>
-
 <body>
+<div class="glass-container">
+  <!-- header with redirect to wallet -->
+  <div class="admin-header">
+    <div class="logo-area">
+      <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="logo-text">
+        <h1>SAFEORA Admin</h1>
+        <span>Secure Vault Control • Decentral Oversight</span>
+      </div>
+    </div>
+    <div class="wallet-redirect-btn" id="redirectWalletBtn">
+      <i class="fas fa-external-link-alt"></i> Redirect to Wallet
+    </div>
+  </div>
 
-<div class="container">
+  <!-- LOGIN SECTION -->
+  <div id="loginSection" class="auth-card" style="max-width: 480px; margin: 2rem auto;">
+    <h2><i class="fas fa-key"></i> Admin Authentication</h2>
+    <p style="margin-bottom: 24px; color: #94A3B8;">Enter secret key to access management panel</p>
+    <div class="input-group">
+      <label><i class="fas fa-lock"></i> ADMIN SECRET KEY</label>
+      <input type="password" id="adminSecretInput" placeholder="e.g. your_admin_secret_key" autocomplete="off">
+    </div>
+    <button id="loginBtn" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Unlock Dashboard</button>
+    <div id="loginError" class="error-msg"></div>
+    <div style="margin-top: 20px; font-size: 0.7rem; text-align: center; opacity: 0.6;">🔐 Secure internal tool — API: safeora.onrender.com</div>
+  </div>
 
-<h2>🔥 SAFEORA ADMIN PANEL</h2>
+  <!-- DASHBOARD (hidden until login) -->
+  <div id="adminDashboard" class="dashboard-grid">
+    <div class="grid-2cols">
+      <!-- SEARCH & USER INFO CARD -->
+      <div class="info-card">
+        <h3><i class="fas fa-user-astronaut"></i> 🔍 Vault Inspector</h3>
+        <div class="input-group">
+          <label>User ID (e.g. user_12345)</label>
+          <input type="text" id="searchUserId" placeholder="Enter user ID to inspect">
+        </div>
+        <button id="loadUserBtn" class="btn-small btn-info" style="width: 100%;"><i class="fas fa-search"></i> Load User Details</button>
+        <div id="userDetailContainer" style="margin-top: 18px;"></div>
+      </div>
 
-<!-- SEARCH USER -->
-<div class="card">
-  <h3>🔍 Find User</h3>
-  <input id="searchUser" placeholder="Enter User ID">
-  <input id="adminSecret" placeholder="Admin Secret">
-  <button class="btn" onclick="getUser()">Load User</button>
+      <!-- BALANCE MODIFICATION -->
+      <div class="info-card">
+        <h3><i class="fas fa-coins"></i> Balance Control</h3>
+        <div class="input-group">
+          <label>Target User ID</label>
+          <input type="text" id="modifyUserId" placeholder="User ID for balance operation">
+        </div>
+        <div class="input-group">
+          <label>Amount (TON)</label>
+          <input type="number" id="modifyAmount" step="any" placeholder="e.g. 10.5 or 5">
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 6px;">
+          <button id="addBalanceBtn" class="btn-small btn-success" style="flex:1"><i class="fas fa-plus-circle"></i> Add TON</button>
+          <button id="cutBalanceBtn" class="btn-small btn-danger" style="flex:1"><i class="fas fa-minus-circle"></i> Cut TON</button>
+        </div>
+        <div id="balanceFeedback" style="margin-top: 12px; font-size: 0.8rem; color: #A0AEC0;"></div>
+      </div>
+    </div>
 
-  <div id="userData"></div>
+    <!-- SECOND ROW -->
+    <div class="grid-2cols">
+      <div class="info-card">
+        <h3><i class="fas fa-users"></i> Registered Wallets</h3>
+        <button id="refreshUsersBtn" class="btn-small btn-info" style="width: 100%; margin-bottom: 12px;"><i class="fas fa-sync-alt"></i> Fetch All Users</button>
+        <div id="allUsersList" class="users-list-scroll">
+          <div style="text-align: center; padding: 20px; color:#6B7280;">— click fetch to load —</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-terminal"></i> Admin API & Session</h3>
+        <div class="user-detail-card" style="background: #0F172A;">
+          <p><i class="fas fa-shield-haltered"></i> <strong>Active Admin Secret:</strong> •••••••• (stored in session)</p>
+          <hr>
+          <p><i class="fas fa-globe"></i> <strong>API Base:</strong> <code style="background:#000;padding:4px 8px;border-radius:12px;">https://safeora.onrender.com</code></p>
+          <p><i class="fas fa-chart-line"></i> Available endpoints:<br>
+          <code style="font-size: 12px;">POST /admin/add-balance</code> | <code style="font-size: 12px;">GET /admin/users</code></p>
+          <button id="resetAdminBtn" class="btn-small" style="background: #475569; margin-top: 12px; width: 100%;"><i class="fas fa-power-off"></i> Lock & Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Insight -->
+    <div class="info-card" style="margin-top: 8px;">
+      <h3><i class="fas fa-history"></i> Recent Activity Insight</h3>
+      <div id="globalTxInfo" style="font-size: 0.85rem; color:#9CA3AF;">Transactions details shown inside user inspection panel. <i class="fas fa-info-circle"></i></div>
+    </div>
+    <div class="footer-note">
+      <i class="fas fa-database"></i> SAFEORA Vault Admin — all changes are logged on chain simulation
+    </div>
+  </div>
 </div>
-
-<!-- BALANCE CONTROL -->
-<div class="card">
-  <h3>💰 Balance Control</h3>
-  <input id="balanceUser" placeholder="User ID">
-  <input id="amount" placeholder="Amount">
-
-  <button class="btn-green" onclick="addBalance()">➕ Add</button>
-  <button class="btn-red" onclick="cutBalance()">➖ Cut</button>
-</div>
-
-<!-- ALL USERS -->
-<div class="card">
-  <h3>👥 All Users</h3>
-  <button class="btn" onclick="loadUsers()">Load All</button>
-  <div id="usersList"></div>
-</div>
-
-</div>
-
 <script>
+  // ---------- CONFIG ----------
+  const API_BASE = "https://safeora.onrender.com";
+  let adminSecretKey = null;
 
-const API = "https://safeora.onrender.com";
+  // DOM references
+  const loginSection = document.getElementById("loginSection");
+  const dashboard = document.getElementById("adminDashboard");
+  const loginBtn = document.getElementById("loginBtn");
+  const adminSecretInput = document.getElementById("adminSecretInput");
+  const loginErrorSpan = document.getElementById("loginError");
+  const redirectBtn = document.getElementById("redirectWalletBtn");
+  const searchUserIdInput = document.getElementById("searchUserId");
+  const loadUserBtn = document.getElementById("loadUserBtn");
+  const userDetailContainer = document.getElementById("userDetailContainer");
+  const modifyUserIdInput = document.getElementById("modifyUserId");
+  const modifyAmountInput = document.getElementById("modifyAmount");
+  const addBalanceBtn = document.getElementById("addBalanceBtn");
+  const cutBalanceBtn = document.getElementById("cutBalanceBtn");
+  const balanceFeedback = document.getElementById("balanceFeedback");
+  const refreshUsersBtn = document.getElementById("refreshUsersBtn");
+  const allUsersListDiv = document.getElementById("allUsersList");
+  const resetAdminBtn = document.getElementById("resetAdminBtn");
 
-// ================= GET USER =================
-async function getUser(){
-  let userId = document.getElementById("searchUser").value;
-  let secret = document.getElementById("adminSecret").value;
-
-  const res = await fetch(API+"/admin/users",{
-    headers:{ "admin-secret": secret }
-  });
-
-  const data = await res.json();
-
-  let user = data.users.find(u => u.user_id == userId);
-
-  if(!user){
-    alert("User not found");
-    return;
+  // authorized fetch wrapper
+  async function authorizedFetch(endpoint, options = {}) {
+    if (!adminSecretKey) throw new Error("No admin secret");
+    const headers = {
+      "Content-Type": "application/json",
+      "admin-secret": adminSecretKey,
+      ...(options.headers || {})
+    };
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      ...options,
+      headers
+    });
+    if (response.status === 401 || response.status === 403) {
+      throw new Error("Unauthorized: invalid or expired admin secret");
+    }
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API error (${response.status}): ${errorText.slice(0, 100)}`);
+    }
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await response.json();
+    }
+    return {};
   }
 
-  document.getElementById("userData").innerHTML = `
-  <div class="user-box">
-  👤 ${user.user_id}<br>
-  💰 Balance: ${user.balance} TON<br>
-  🧾 TX Count: ${user.tx_count}
-  </div>
-  `;
+  // login logic
+  async function performLogin() {
+    const secret = adminSecretInput.value.trim();
+    if (!secret) {
+      loginErrorSpan.innerText = "❌ Please enter admin secret key";
+      return;
+    }
+    loginErrorSpan.innerText = "🔐 Verifying...";
+    try {
+      const res = await fetch(`${API_BASE}/admin/users`, {
+        headers: { "admin-secret": secret }
+      });
+      if (res.status === 401 || res.status === 403 || !res.ok) {
+        throw new Error("Invalid admin secret or insufficient privileges");
+      }
+      const data = await res.json();
+      if (data && (data.users !== undefined || Array.isArray(data.users))) {
+        adminSecretKey = secret;
+        loginSection.style.display = "none";
+        dashboard.style.display = "block";
+        await loadAllUsers();
+        loginErrorSpan.innerText = "";
+      } else {
+        throw new Error("Unexpected response");
+      }
+    } catch (err) {
+      loginErrorSpan.innerText = `⛔ Login failed: ${err.message}`;
+      adminSecretKey = null;
+    }
+  }
 
-  loadTransactions(user.user_id, secret);
-}
+  // load all users
+  async function loadAllUsers() {
+    if (!adminSecretKey) return;
+    try {
+      const data = await authorizedFetch("/admin/users");
+      const users = data.users || [];
+      if (!users.length) {
+        allUsersListDiv.innerHTML = `<div style="text-align:center; padding:12px;">📭 No users registered yet</div>`;
+        return;
+      }
+      let html = "";
+      users.forEach(user => {
+        const balanceTon = (user.balance !== undefined && user.balance !== null) ? parseFloat(user.balance).toFixed(4) : "0.0000";
+        html += `
+          <div class="user-entry">
+            <span><i class="fas fa-id-card"></i> ${escapeHtml(user.user_id)}</span>
+            <span><i class="fas fa-database"></i> ${balanceTon} TON</span>
+          </div>
+        `;
+      });
+      allUsersListDiv.innerHTML = html;
+    } catch (err) {
+      allUsersListDiv.innerHTML = `<div style="color:#F87171;">⚠️ Failed to load users: ${err.message}</div>`;
+    }
+  }
 
-// ================= LOAD ALL USERS =================
-async function loadUsers(){
-  let secret = document.getElementById("adminSecret").value;
+  // fetch user by id
+  async function fetchUserById(userId) {
+    if (!adminSecretKey) return null;
+    const data = await authorizedFetch("/admin/users");
+    const users = data.users || [];
+    return users.find(u => u.user_id === userId) || null;
+  }
 
-  const res = await fetch(API+"/admin/users",{
-    headers:{ "admin-secret": secret }
+  // display user details with transaction mock
+  async function displayUserDetails(userId) {
+    if (!userId) {
+      userDetailContainer.innerHTML = `<div class="user-detail-card">⚠️ Please provide user ID</div>`;
+      return;
+    }
+    userDetailContainer.innerHTML = `<div class="user-detail-card"><i class="fas fa-spinner fa-pulse"></i> Fetching vault data...</div>`;
+    try {
+      const user = await fetchUserById(userId);
+      if (!user) {
+        userDetailContainer.innerHTML = `<div class="user-detail-card">❌ User "${escapeHtml(userId)}" not found in registry.</div>`;
+        return;
+      }
+      const balanceTon = (user.balance !== undefined) ? parseFloat(user.balance).toFixed(4) : "0.0000";
+      const txCount = user.tx_count !== undefined ? user.tx_count : 0;
+      let txHtml = `<div style="margin-top: 12px;"><strong><i class="fas fa-receipt"></i> Transaction log (last ${Math.min(txCount,5)} entries)</strong><div style="font-size:0.7rem; color:#A0AEC0;">* simulated from count</div>`;
+      if (txCount === 0) {
+        txHtml += `<div class="tx-item">✨ No transactions yet</div>`;
+      } else {
+        for (let i = 0; i < Math.min(txCount, 5); i++) {
+          const mockType = i % 2 === 0 ? "Deposit" : "Withdrawal";
+          const mockAmount = (Math.random() * 2 + 0.5).toFixed(2);
+          txHtml += `<div class="tx-item"><i class="fas fa-exchange-alt"></i> ${mockType}  ·  ${mockAmount} TON  ·  ref: TON${Date.now() + i}</div>`;
+        }
+      }
+      txHtml += `</div>`;
+      userDetailContainer.innerHTML = `
+        <div class="user-detail-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-user-circle"></i> <strong>${escapeHtml(user.user_id)}</strong></span>
+            <span class="balance-highlight">${balanceTon} TON</span>
+          </div>
+          <div style="margin-top: 12px;"><i class="fas fa-chart-simple"></i> Total transactions: ${txCount}</div>
+          <hr>
+          ${txHtml}
+          <div class="footer-note" style="margin-top: 12px; text-align: left;"><i class="fas fa-clock"></i> last updated: live via admin</div>
+        </div>
+      `;
+    } catch (err) {
+      userDetailContainer.innerHTML = `<div class="user-detail-card" style="color:#F87171;">⚠️ Error: ${err.message}</div>`;
+    }
+  }
+
+  // modify balance
+  async function modifyBalance(userId, amountRaw, isAddOperation = true) {
+    if (!userId) {
+      balanceFeedback.innerText = "❌ User ID required";
+      return false;
+    }
+    let amount = parseFloat(amountRaw);
+    if (isNaN(amount)) {
+      balanceFeedback.innerText = "⚠️ Invalid amount number";
+      return false;
+    }
+    if (!isAddOperation && amount > 0) amount = -Math.abs(amount);
+    else if (isAddOperation && amount < 0) amount = Math.abs(amount);
+
+    if (amount === 0) {
+      balanceFeedback.innerText = "ℹ️ No change (amount zero)";
+      return false;
+    }
+
+    balanceFeedback.innerText = "Processing ...";
+    try {
+      await authorizedFetch("/admin/add-balance", {
+        method: "POST",
+        body: JSON.stringify({ user_id: userId, amount })
+      });
+      balanceFeedback.innerHTML = `<span style="color:#34D399;">✅ Balance ${amount > 0 ? "added" : "deducted"} successfully (${amount > 0 ? '+' : ''}${amount.toFixed(4)} TON)</span>`;
+      const currentSearchId = searchUserIdInput.value.trim();
+      if (currentSearchId === userId) {
+        await displayUserDetails(userId);
+      }
+      await loadAllUsers();
+      return true;
+    } catch (err) {
+      balanceFeedback.innerHTML = `<span style="color:#F87171;">❌ Failed: ${err.message}</span>`;
+      return false;
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function redirectToWallet() {
+    window.open("https://safeora.onrender.com/wallet", "_blank");
+  }
+
+  function logoutAdmin() {
+    adminSecretKey = null;
+    dashboard.style.display = "none";
+    loginSection.style.display = "block";
+    adminSecretInput.value = "";
+    userDetailContainer.innerHTML = "";
+    allUsersListDiv.innerHTML = `<div style="text-align:center; padding:20px; color:#6B7280;">— session ended —</div>`;
+    balanceFeedback.innerHTML = "";
+    loginErrorSpan.innerText = "";
+  }
+
+  // EVENT LISTENERS
+  loginBtn.addEventListener("click", performLogin);
+  redirectBtn.addEventListener("click", redirectToWallet);
+  resetAdminBtn.addEventListener("click", logoutAdmin);
+  loadUserBtn.addEventListener("click", async () => {
+    const userId = searchUserIdInput.value.trim();
+    if (!userId) {
+      userDetailContainer.innerHTML = `<div class="user-detail-card">⚠️ Please enter a User ID to inspect</div>`;
+      return;
+    }
+    await displayUserDetails(userId);
   });
-
-  const data = await res.json();
-
-  let html = "";
-
-  data.users.forEach(u=>{
-    html += `
-    <div class="user-box">
-      ${u.user_id} - ${u.balance} TON
-    </div>`;
+  addBalanceBtn.addEventListener("click", async () => {
+    const userId = modifyUserIdInput.value.trim();
+    const amountVal = modifyAmountInput.value;
+    if (!userId) { balanceFeedback.innerText = "❌ Provide user ID in balance control section"; return; }
+    await modifyBalance(userId, amountVal, true);
   });
-
-  document.getElementById("usersList").innerHTML = html;
-}
-
-// ================= ADD BALANCE =================
-async function addBalance(){
-  let user_id = document.getElementById("balanceUser").value;
-  let amount = document.getElementById("amount").value;
-  let secret = document.getElementById("adminSecret").value;
-
-  await fetch(API+"/admin/add-balance",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "admin-secret": secret
-    },
-    body: JSON.stringify({ user_id, amount: parseFloat(amount) })
+  cutBalanceBtn.addEventListener("click", async () => {
+    const userId = modifyUserIdInput.value.trim();
+    const amountVal = modifyAmountInput.value;
+    if (!userId) { balanceFeedback.innerText = "❌ Provide user ID in balance control section"; return; }
+    await modifyBalance(userId, amountVal, false);
   });
-
-  alert("Balance Added");
-}
-
-// ================= CUT BALANCE =================
-async function cutBalance(){
-  let user_id = document.getElementById("balanceUser").value;
-  let amount = document.getElementById("amount").value;
-  let secret = document.getElementById("adminSecret").value;
-
-  await fetch(API+"/admin/add-balance",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "admin-secret": secret
-    },
-    body: JSON.stringify({ user_id, amount: -Math.abs(amount) })
+  refreshUsersBtn.addEventListener("click", async () => {
+    await loadAllUsers();
   });
-
-  alert("Balance Deducted");
-}
-
-// ================= LOAD TRANSACTIONS =================
-async function loadTransactions(userId, secret){
-
-  const res = await fetch(API+"/admin/users",{
-    headers:{ "admin-secret": secret }
+  adminSecretInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") performLogin();
   });
-
-  const data = await res.json();
-
-  let user = data.users.find(u => u.user_id == userId);
-
-  if(!user) return;
-
-  let html = "<h4>📜 Transactions</h4>";
-
-  // NOTE: backend change needed for full tx
-  html += "<div>⚠️ Transaction details need backend update</div>";
-
-  document.getElementById("userData").innerHTML += html;
-}
-
 </script>
-
 </body>
 </html>
