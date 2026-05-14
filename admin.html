@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAFEORA Admin Panel</title>
+<title>SAFEORA Admin Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -12,51 +12,66 @@ body{
   background:#0a0c12;
   color:#fff;
   font-family:'Inter',sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+  padding:20px;
 }
 
 .container{
-  width:100%;
-  max-width:400px;
-  background:#111827;
-  padding:25px;
-  border-radius:20px;
-  border:1px solid #1f2a44;
+  max-width:600px;
+  margin:auto;
 }
 
-h2{
-  text-align:center;
+.card{
+  background:#111827;
+  padding:20px;
+  border-radius:20px;
   margin-bottom:20px;
+  border:1px solid #1f2a44;
 }
 
 input{
   width:100%;
   padding:12px;
-  margin-bottom:12px;
-  border-radius:12px;
+  margin-bottom:10px;
   border:none;
+  border-radius:12px;
   background:#1e293b;
   color:#fff;
 }
 
 button{
-  width:100%;
-  padding:12px;
+  padding:10px 16px;
   border:none;
-  border-radius:12px;
-  background:#3b82f6;
-  color:#fff;
-  font-weight:600;
+  border-radius:10px;
   cursor:pointer;
+  font-weight:600;
 }
 
-.result{
-  margin-top:15px;
-  font-size:0.85rem;
-  text-align:center;
+.btn{
+  background:#3b82f6;
+  color:white;
+}
+
+.btn-red{
+  background:#ef4444;
+  color:white;
+}
+
+.btn-green{
+  background:#10b981;
+  color:white;
+}
+
+.user-box{
+  padding:10px;
+  background:#1e293b;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.tx{
+  font-size:0.8rem;
+  border-bottom:1px solid #1f2a44;
+  padding:6px 0;
 }
 </style>
 </head>
@@ -64,60 +79,148 @@ button{
 <body>
 
 <div class="container">
-  <h2>Admin Add Balance</h2>
 
-  <input id="userId" placeholder="User ID">
-  <input id="amount" placeholder="Amount (TON)">
-  <input id="secret" placeholder="Admin Secret">
+<h2>🔥 SAFEORA ADMIN PANEL</h2>
 
-  <button onclick="addBalance()">Add Balance</button>
+<!-- SEARCH USER -->
+<div class="card">
+  <h3>🔍 Find User</h3>
+  <input id="searchUser" placeholder="Enter User ID">
+  <input id="adminSecret" placeholder="Admin Secret">
+  <button class="btn" onclick="getUser()">Load User</button>
 
-  <div class="result" id="result"></div>
+  <div id="userData"></div>
+</div>
+
+<!-- BALANCE CONTROL -->
+<div class="card">
+  <h3>💰 Balance Control</h3>
+  <input id="balanceUser" placeholder="User ID">
+  <input id="amount" placeholder="Amount">
+
+  <button class="btn-green" onclick="addBalance()">➕ Add</button>
+  <button class="btn-red" onclick="cutBalance()">➖ Cut</button>
+</div>
+
+<!-- ALL USERS -->
+<div class="card">
+  <h3>👥 All Users</h3>
+  <button class="btn" onclick="loadUsers()">Load All</button>
+  <div id="usersList"></div>
+</div>
+
 </div>
 
 <script>
 
-const API = "https://safeora.onrender.com"; // তোমার backend URL
+const API = "https://safeora.onrender.com";
 
-async function addBalance(){
+// ================= GET USER =================
+async function getUser(){
+  let userId = document.getElementById("searchUser").value;
+  let secret = document.getElementById("adminSecret").value;
 
-  let user_id = document.getElementById("userId").value;
-  let amount = document.getElementById("amount").value;
-  let secret = document.getElementById("secret").value;
+  const res = await fetch(API+"/admin/users",{
+    headers:{ "admin-secret": secret }
+  });
 
-  if(!user_id || !amount || !secret){
-    alert("সব ফিল্ড পূরণ কর");
+  const data = await res.json();
+
+  let user = data.users.find(u => u.user_id == userId);
+
+  if(!user){
+    alert("User not found");
     return;
   }
 
-  try{
-    const res = await fetch(API + "/admin/add-balance",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "admin-secret": secret
-      },
-      body: JSON.stringify({
-        user_id: user_id,
-        amount: parseFloat(amount)
-      })
-    });
+  document.getElementById("userData").innerHTML = `
+  <div class="user-box">
+  👤 ${user.user_id}<br>
+  💰 Balance: ${user.balance} TON<br>
+  🧾 TX Count: ${user.tx_count}
+  </div>
+  `;
 
-    const data = await res.json();
+  loadTransactions(user.user_id, secret);
+}
 
-    if(data.success){
-      document.getElementById("result").innerHTML =
-      "✅ Success<br>User: "+data.user_id+
-      "<br>New Balance: "+data.new_balance+" TON";
-    }else{
-      document.getElementById("result").innerHTML =
-      "❌ "+data.error;
-    }
+// ================= LOAD ALL USERS =================
+async function loadUsers(){
+  let secret = document.getElementById("adminSecret").value;
 
-  }catch(e){
-    document.getElementById("result").innerHTML =
-    "Error: "+e.message;
-  }
+  const res = await fetch(API+"/admin/users",{
+    headers:{ "admin-secret": secret }
+  });
+
+  const data = await res.json();
+
+  let html = "";
+
+  data.users.forEach(u=>{
+    html += `
+    <div class="user-box">
+      ${u.user_id} - ${u.balance} TON
+    </div>`;
+  });
+
+  document.getElementById("usersList").innerHTML = html;
+}
+
+// ================= ADD BALANCE =================
+async function addBalance(){
+  let user_id = document.getElementById("balanceUser").value;
+  let amount = document.getElementById("amount").value;
+  let secret = document.getElementById("adminSecret").value;
+
+  await fetch(API+"/admin/add-balance",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "admin-secret": secret
+    },
+    body: JSON.stringify({ user_id, amount: parseFloat(amount) })
+  });
+
+  alert("Balance Added");
+}
+
+// ================= CUT BALANCE =================
+async function cutBalance(){
+  let user_id = document.getElementById("balanceUser").value;
+  let amount = document.getElementById("amount").value;
+  let secret = document.getElementById("adminSecret").value;
+
+  await fetch(API+"/admin/add-balance",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "admin-secret": secret
+    },
+    body: JSON.stringify({ user_id, amount: -Math.abs(amount) })
+  });
+
+  alert("Balance Deducted");
+}
+
+// ================= LOAD TRANSACTIONS =================
+async function loadTransactions(userId, secret){
+
+  const res = await fetch(API+"/admin/users",{
+    headers:{ "admin-secret": secret }
+  });
+
+  const data = await res.json();
+
+  let user = data.users.find(u => u.user_id == userId);
+
+  if(!user) return;
+
+  let html = "<h4>📜 Transactions</h4>";
+
+  // NOTE: backend change needed for full tx
+  html += "<div>⚠️ Transaction details need backend update</div>";
+
+  document.getElementById("userData").innerHTML += html;
 }
 
 </script>
