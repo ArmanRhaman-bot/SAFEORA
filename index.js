@@ -9,7 +9,7 @@ app.use(express.json())
 // ================== IN-MEMORY DATABASE ==================
 let users = {}      // userId => { balance, apiKey, depositAddress, pendingDeposits }
 let apiKeys = {}    // apiKey => userId
-let depositMap = {} // depositMemo => userId (TON comment দিয়ে ম্যাচ করবে)
+let depositMap = {} // depositMemo => userId (TON comment)
 
 // ================== TON IMPORTS ==================
 const {
@@ -53,34 +53,32 @@ async function getMasterWallet(client) {
 // ================== ROOT ==================
 app.get("/", (req, res) => {
   res.json({
-    name: "TBL Earn - TON Payment Gateway API",
+    name: "SAFEORA - TON Payment Gateway API",
     version: "2.0.0",
     endpoints: {
-      "POST /api/register":      "নতুন ইউজার রেজিস্ট্রেশন + API key পাবে",
-      "GET  /api/deposit/info":  "ডিপোজিট অ্যাড্রেস ও মেমো পাবে (x-api-key লাগবে)",
-      "POST /api/deposit/verify":"ডিপোজিট ভেরিফাই করে ব্যালেন্স আপডেট করবে",
-      "GET  /api/balance":       "ব্যালেন্স চেক (x-api-key লাগবে)",
-      "POST /api/withdraw":      "TON উইথড্র (x-api-key লাগবে)",
-      "POST /admin/add-balance": "অ্যাডমিন ব্যালেন্স অ্যাড (admin-secret লাগবে)",
-      "GET  /admin/users":       "সব ইউজার দেখো (admin-secret লাগবে)"
+      "POST /api/register":      "New user registration + will receive API key",
+      "GET  /api/deposit/info":  "Create a deposit address)",
+      "POST /api/deposit/verify":"Deposit Verify",
+      "GET  /api/balance":       "Balance Check",
+      "POST /api/withdraw":      "Withdraw Coins"
     }
   })
 })
 
 // ================== REGISTER ==================
-// নতুন ইউজার রেজিস্ট্রেশন — API key পাবে
+// New user registration — will receive API key
 app.post("/api/register", (req, res) => {
   const { user_id } = req.body
 
   if (!user_id) {
-    return res.status(400).json({ success: false, error: "user_id আবশ্যক" })
+    return res.status(400).json({ success: false, error: "user_id Required" })
   }
 
-  // আগে থেকে থাকলে একই key ফেরত দাও
+  // Return the same key if it already exists.
   if (users[user_id]) {
     return res.json({
       success: true,
-      message: "আগে থেকেই রেজিস্টার্ড",
+      message: "Already registered",
       api_key: users[user_id].apiKey,
       balance: users[user_id].balance
     })
@@ -92,7 +90,7 @@ app.post("/api/register", (req, res) => {
   users[user_id] = {
     balance: 0,
     apiKey,
-    memo,             // ডিপোজিটের সময় এই memo কমেন্টে দিতে হবে
+    memo,             // This memo must be commented at the time of deposit.
     transactions: []
   }
 
@@ -101,19 +99,19 @@ app.post("/api/register", (req, res) => {
 
   return res.status(201).json({
     success: true,
-    message: "রেজিস্ট্রেশন সফল",
+    message: "Registration successful.",
     api_key: apiKey,
     balance: 0,
     deposit_info: {
-      address: process.env.MASTER_WALLET_ADDRESS || "আপনার মাস্টার ওয়ালেট অ্যাড্রেস দিন",
+      address: process.env.MASTER_WALLET_ADDRESS || "Enter your master wallet address.",
       memo,
-      note: "TON পাঠানোর সময় comment/memo তে এই কোড লিখতে হবে"
+      note: "When sending TON, write this code in the comment/memo"
     }
   })
 })
 
 // ================== DEPOSIT INFO ==================
-// ইউজার তার ডিপোজিট অ্যাড্রেস ও মেমো জানবে
+// The user will know his deposit address and memo.
 app.get("/api/deposit/info", (req, res) => {
   const apiKey = req.headers["x-api-key"]
   const userId = apiKeys[apiKey]
@@ -127,12 +125,12 @@ app.get("/api/deposit/info", (req, res) => {
     deposit_address: process.env.MASTER_WALLET_ADDRESS,
     memo: users[userId].memo,
     current_balance: users[userId].balance,
-    instruction: `TON পাঠান এই অ্যাড্রেসে। Comment/Memo তে লিখুন: ${users[userId].memo}`
+    instruction: `Send TON to this address. Write in Comment/Memo: ${users[userId].memo}`
   })
 })
 
 // ================== DEPOSIT VERIFY ==================
-// TON ব্লকচেইন থেকে ট্রানজেকশন চেক করে ব্যালেন্স আপডেট করবে
+// TON will update the balance by checking transactions from the blockchain.
 app.post("/api/deposit/verify", async (req, res) => {
   const apiKey = req.headers["x-api-key"]
   const userId = apiKeys[apiKey]
@@ -145,7 +143,7 @@ app.post("/api/deposit/verify", async (req, res) => {
     const client   = await getTonClient()
     const { wallet, contract } = await getMasterWallet(client)
 
-    // শেষ ১০টি ট্রানজেকশন চেক করো
+    // Check last 10 transactions
     const txs = await client.getTransactions(wallet.address, { limit: 20 })
 
     const userMemo = users[userId].memo
@@ -153,7 +151,7 @@ app.post("/api/deposit/verify", async (req, res) => {
     let totalAdded = 0
 
     for (const tx of txs) {
-      // শুধু incoming ট্রানজেকশন
+      // Only incoming transactions
       if (!tx.inMessage) continue
 
       const body = tx.inMessage.body
@@ -170,7 +168,7 @@ app.post("/api/deposit/verify", async (req, res) => {
 
       if (comment.trim() !== userMemo) continue
 
-      // ট্রানজেকশন আগে প্রসেস হয়েছে কিনা চেক
+      // Check if the transaction has been processed before
       const txHash = tx.hash().toString("hex")
 
       const alreadyProcessed = users[userId].transactions
@@ -195,14 +193,14 @@ app.post("/api/deposit/verify", async (req, res) => {
     if (found) {
       return res.json({
         success: true,
-        message: `${totalAdded} TON ব্যালেন্সে যোগ হয়েছে`,
+        message: `${totalAdded} Added to balance`,
         added: totalAdded,
         new_balance: users[userId].balance
       })
     } else {
       return res.json({
         success: false,
-        message: "নতুন কোনো ডিপোজিট পাওয়া যায়নি। মেমো সহ পাঠিয়েছেন তো?",
+        message: "No new deposits were found. You sent it with a memo?",
         current_balance: users[userId].balance
       })
     }
@@ -241,27 +239,27 @@ app.post("/api/withdraw", async (req, res) => {
   const withdrawAmount = parseFloat(amount)
 
   if (!toAddress || !withdrawAmount || withdrawAmount <= 0) {
-    return res.status(400).json({ success: false, error: "wallet ও amount আবশ্যক" })
+    return res.status(400).json({ success: false, error: "Wallet and amount are required." })
   }
 
-  // মিনিমাম ০.১ TON
-  if (withdrawAmount < 0.1) {
-    return res.status(400).json({ success: false, error: "মিনিমাম উইথড্র ০.১ TON" })
+  // Minimum 0.01 TON
+  if (withdrawAmount < 0.01) {
+    return res.status(400).json({ success: false, error: "Minimum withdrawal 0.01 TON" })
   }
 
   if (users[userId].balance < withdrawAmount) {
     return res.status(400).json({
       success: false,
-      error: "ব্যালেন্স যথেষ্ট নেই",
+      error: "Not enough balance",
       balance: users[userId].balance
     })
   }
 
   try {
-    // Address ভ্যালিডেশন
+    // Address validation
     Address.parse(toAddress)
   } catch (_) {
-    return res.status(400).json({ success: false, error: "ওয়ালেট অ্যাড্রেস ভুল" })
+    return res.status(400).json({ success: false, error: "Incorrect wallet address" })
   }
 
   try {
@@ -282,7 +280,7 @@ app.post("/api/withdraw", async (req, res) => {
       ]
     })
 
-    // ব্যালেন্স কাটো
+    // Balance deduction
     users[userId].balance -= withdrawAmount
     users[userId].transactions.push({
       type:   "withdraw",
@@ -315,7 +313,7 @@ app.get("/api/transactions", (req, res) => {
 
   return res.json({
     success: true,
-    transactions: users[userId].transactions.slice(-20) // শেষ ২০টি
+    transactions: users[userId].transactions.slice(-20) // Last 20
   })
 })
 
@@ -330,11 +328,11 @@ app.post("/admin/add-balance", (req, res) => {
   const { user_id, amount } = req.body
 
   if (!user_id || !amount) {
-    return res.status(400).json({ success: false, error: "user_id ও amount লাগবে" })
+    return res.status(400).json({ success: false, error: "user_id & Amount required" })
   }
 
   if (!users[user_id]) {
-    return res.status(404).json({ success: false, error: "ইউজার পাওয়া যায়নি" })
+    return res.status(404).json({ success: false, error: "User not found." })
   }
 
   users[user_id].balance += parseFloat(amount)
@@ -383,5 +381,5 @@ app.get("/admin", (req, res) => {
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
-  console.log(`TBL Earn API চালু: http://localhost:${PORT}`)
+  console.log(`SAFORA LIVE ON: http://localhost:${PORT}`)
 })
