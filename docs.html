@@ -363,7 +363,6 @@
 </style>
 </head>
 <body>
-
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
@@ -384,17 +383,7 @@
     <div class="version-pill">v1.0</div>
   </div>
 
-  <!-- Endpoint Hero -->
-  <div class="section-label">Endpoint</div>
-  <div class="endpoint-hero">
-    <div class="method-row">
-      <span class="method-badge">POST</span>
-      <span class="endpoint-path">/ton/send</span>
-    </div>
-    <p class="endpoint-desc">Transfer TON to any wallet address instantly. Requires a valid API key passed via request headers.</p>
-  </div>
-
-  <!-- Headers -->
+  <!-- Authentication & Headers (shared) -->
   <div class="section-label">Authentication & Headers</div>
   <div class="card">
     <div class="card-header">
@@ -410,29 +399,136 @@
     </div>
   </div>
 
-  <!-- Body -->
-  <div class="section-label">Request Body</div>
+  <!-- ENDPOINT 1: POST /api/register -->
+  <div class="section-label">Endpoint 1: Registration</div>
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span class="dot"></span> JSON Payload</div>
+      <div class="card-title"><span class="dot"></span> POST /api/register</div>
     </div>
     <div class="code-wrap">
-      <button class="copy-btn" onclick="handleCopy(this, 'body')">
+      <button class="copy-btn" onclick="handleCopy(this, 'registerBody')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         Copy
       </button>
-      <pre id="body"><span class="t-punct">{</span>
-  <span class="t-key">"wallet"</span><span class="t-punct">:</span> <span class="t-str">"UQXXXX..."</span><span class="t-punct">,</span>
-  <span class="t-key">"amount"</span><span class="t-punct">:</span> <span class="t-str">"0.05"</span>
+      <pre id="registerBody"><span class="t-punct">{</span>
+  <span class="t-key">"username"</span><span class="t-punct">:</span> <span class="t-str">"alice"</span><span class="t-punct">,</span>
+  <span class="t-key">"email"</span><span class="t-punct">:</span>    <span class="t-str">"alice@example.com"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+    <div style="padding: 12px 22px 20px; border-top: 1px solid var(--border);">
+      <div style="color: var(--accent); font-size: 11px; font-family: monospace; margin-bottom: 8px;">✅ Response 200:</div>
+      <pre style="background: #020810; padding: 12px; border-radius: 12px; margin: 0;"><span class="t-punct">{</span>
+  <span class="t-key">"success"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
+  <span class="t-key">"api_key"</span><span class="t-punct">:</span>  <span class="t-str">"sa_live_7f3d8e..."</span><span class="t-punct">,</span>
+  <span class="t-key">"message"</span><span class="t-punct">:</span>   <span class="t-str">"Account created. Store your API key securely."</span>
 <span class="t-punct">}</span></pre>
     </div>
   </div>
 
-  <!-- SAFEORA Example -->
+  <!-- ENDPOINT 2: GET /api/balance -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="dot"></span> GET /api/balance</div>
+    </div>
+    <div style="padding: 16px 22px;">
+      <div style="margin-bottom: 12px; font-size:13px; color: var(--muted);">Returns current wallet balance (TON and nanoTON).</div>
+      <pre style="background: #020810; padding: 12px; border-radius: 12px; margin: 0;"><span class="t-punct">{</span>
+  <span class="t-key">"balance"</span><span class="t-punct">:</span>     <span class="t-str">"12.500000"</span><span class="t-punct">,</span>
+  <span class="t-key">"balance_nano"</span><span class="t-punct">:</span> <span class="t-num">12500000000</span><span class="t-punct">,</span>
+  <span class="t-key">"currency"</span><span class="t-punct">:</span>     <span class="t-str">"TON"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+  </div>
+
+  <!-- ENDPOINT 3: GET /api/deposit/info -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="dot"></span> GET /api/deposit/info</div>
+    </div>
+    <div style="padding: 16px 22px;">
+      <div style="margin-bottom: 12px; font-size:13px; color: var(--muted);">Get unique deposit address and memo (comment) for TON deposits.</div>
+      <pre style="background: #020810; padding: 12px; border-radius: 12px; margin: 0;"><span class="t-punct">{</span>
+  <span class="t-key">"address"</span><span class="t-punct">:</span> <span class="t-str">"EQD...deposit"</span><span class="t-punct">,</span>
+  <span class="t-key">"memo"</span><span class="t-punct">:</span>    <span class="t-str">"21049012"</span><span class="t-punct">,</span>
+  <span class="t-key">"network"</span><span class="t-punct">:</span>   <span class="t-str">"TON"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+  </div>
+
+  <!-- ENDPOINT 4: POST /api/deposit/verify -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="dot"></span> POST /api/deposit/verify</div>
+    </div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="handleCopy(this, 'depVer')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <pre id="depVer"><span class="t-punct">{</span>
+  <span class="t-key">"tx_hash"</span><span class="t-punct">:</span> <span class="t-str">"e6d3f..."</span><span class="t-punct">,</span>
+  <span class="t-key">"amount"</span><span class="t-punct">:</span>   <span class="t-str">"5.0"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+    <div style="padding: 12px 22px 20px; border-top: 1px solid var(--border);">
+      <div style="color: var(--accent); font-size: 11px;">✅ Response:</div>
+      <pre style="background:#020810;padding:10px;border-radius:12px;margin-top:6px;"><span class="t-punct">{</span><span class="t-key">"verified"</span><span class="t-punct">:</span><span class="t-bool">true</span><span class="t-punct">,</span> <span class="t-key">"transaction"</span><span class="t-punct">:</span><span class="t-str">"..."</span><span class="t-punct">}</span></pre>
+    </div>
+  </div>
+
+  <!-- ENDPOINT 5: POST /api/withdraw (replaces /ton/send) -->
+  <div class="section-label">Endpoint 5: Withdraw TON</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="dot"></span> POST /api/withdraw</div>
+    </div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="handleCopy(this, 'withdrawBody')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <pre id="withdrawBody"><span class="t-punct">{</span>
+  <span class="t-key">"address"</span><span class="t-punct">:</span> <span class="t-str">"UQAbc123...DEF"</span><span class="t-punct">,</span>
+  <span class="t-key">"amount"</span><span class="t-punct">:</span>  <span class="t-str">"1.25"</span>
+<span class="t-punct">}</span></pre>
+    </div>
+    <div style="padding: 12px 22px 20px; border-top: 1px solid var(--border);">
+      <div style="color: var(--success); font-size: 11px;">✅ Success (200):</div>
+      <pre style="background:#020810;padding:10px;border-radius:12px;"><span class="t-punct">{</span>
+  <span class="t-key">"success"</span><span class="t-punct">:</span>  <span class="t-bool">true</span><span class="t-punct">,</span>
+  <span class="t-key">"tx_hash"</span><span class="t-punct">:</span>  <span class="t-str">"0x7f3c..."</span><span class="t-punct">,</span>
+  <span class="t-key">"message"</span><span class="t-punct">:</span>  <span class="t-str">"Withdrawal initiated"</span>
+<span class="t-punct">}</span></pre>
+      <div style="color: var(--danger); font-size: 11px; margin-top: 10px;">⚠️ Error (4xx):</div>
+      <pre style="background:#020810;padding:10px;border-radius:12px;"><span class="t-punct">{</span><span class="t-key">"success"</span><span class="t-punct">:</span><span class="t-bool">false</span><span class="t-punct">,</span> <span class="t-key">"error"</span><span class="t-punct">:</span><span class="t-str">"Insufficient balance"</span><span class="t-punct">}</span></pre>
+    </div>
+  </div>
+
+  <!-- ENDPOINT 6: GET /api/transactions -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="dot"></span> GET /api/transactions</div>
+    </div>
+    <div style="padding: 16px 22px;">
+      <div style="margin-bottom: 12px; font-size:13px; color: var(--muted);">Transaction history with pagination (limit, offset).</div>
+      <pre style="background: #020810; padding: 12px; border-radius: 12px; margin: 0;"><span class="t-punct">{</span>
+  <span class="t-key">"transactions"</span><span class="t-punct">:</span> <span class="t-punct">[</span>
+    <span class="t-punct">{</span>
+      <span class="t-key">"tx_id"</span><span class="t-punct">:</span>     <span class="t-str">"hash_01"</span><span class="t-punct">,</span>
+      <span class="t-key">"type"</span><span class="t-punct">:</span>      <span class="t-str">"withdraw"</span><span class="t-punct">,</span>
+      <span class="t-key">"amount"</span><span class="t-punct">:</span>    <span class="t-str">"0.5"</span><span class="t-punct">,</span>
+      <span class="t-key">"timestamp"</span><span class="t-punct">:</span> <span class="t-num">1700000000</span>
+    <span class="t-punct">}</span>
+  <span class="t-punct">],</span>
+  <span class="t-key">"total"</span><span class="t-punct">:</span> <span class="t-num">42</span>
+<span class="t-punct">}</span></pre>
+    </div>
+  </div>
+  <!-- SAFEORA Code Example (updated to use /api/withdraw) -->
   <div class="section-label">SAFEORA Code Example</div>
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span class="dot" style="background:#fb923c;box-shadow:0 0 8px #fb923c;"></span> SAFEORA Script</div>
+      <div class="card-title"><span class="dot" style="background:#fb923c;box-shadow:0 0 8px #fb923c;"></span> SAFEORA Script (Withdraw)</div>
     </div>
     <div class="code-wrap">
       <button class="copy-btn" onclick="handleCopy(this, 'tbl')">
@@ -442,16 +538,16 @@
       <pre id="tbl"><span class="t-meth">HTTP</span><span class="t-punct">.</span><span class="t-meth">post</span><span class="t-punct">({</span>
 
   <span class="t-prop">url</span><span class="t-punct">:</span>
-    <span class="t-str">"https://tbl-earn-production.up.railway.app/ton/send"</span><span class="t-punct">,</span>
+    <span class="t-str">"https://tbl-earn-production.up.railway.app/api/withdraw"</span><span class="t-punct">,</span>
 
   <span class="t-prop">headers</span><span class="t-punct">: {</span>
-    <span class="t-key">"x-api-key"</span><span class="t-punct">:</span>      <span class="t-str">"API_KEY"</span><span class="t-punct">,</span>
+    <span class="t-key">"x-api-key"</span><span class="t-punct">:</span>      <span class="t-str">"YOUR_API_KEY"</span><span class="t-punct">,</span>
     <span class="t-key">"Content-Type"</span><span class="t-punct">:</span>  <span class="t-str">"application/json"</span>
   <span class="t-punct">},</span>
 
   <span class="t-prop">body</span><span class="t-punct">: {</span>
-    <span class="t-key">wallet</span><span class="t-punct">:</span>  <span class="t-str">"UQXXXX..."</span><span class="t-punct">,</span>
-    <span class="t-key">amount</span><span class="t-punct">:</span>  <span class="t-str">"0.05"</span>
+    <span class="t-key">address</span><span class="t-punct">:</span>  <span class="t-str">"UQXXXX..."</span><span class="t-punct">,</span>
+    <span class="t-key">amount</span><span class="t-punct">:</span>   <span class="t-str">"0.05"</span>
   <span class="t-punct">},</span>
 
   <span class="t-prop">success</span><span class="t-punct">:</span> <span class="t-str">"/done"</span><span class="t-punct">,</span>
@@ -461,13 +557,12 @@
     </div>
   </div>
 
-  <!-- Responses -->
-  <div class="section-label">Responses</div>
+  <!-- Responses summary -->
+  <div class="section-label">Standard Responses</div>
   <div class="response-grid">
-
     <div class="card" style="margin-bottom:0;">
       <div class="card-header">
-        <div class="card-title"><span class="dot green"></span> 200 Success</div>
+        <div class="card-title"><span class="dot green"></span> 200 Success Format</div>
       </div>
       <div class="code-wrap">
         <button class="copy-btn" onclick="handleCopy(this, 'succ')">
@@ -475,15 +570,14 @@
           Copy
         </button>
         <pre id="succ"><span class="t-punct">{</span>
-  <span class="t-key">"success"</span><span class="t-punct">:</span>  <span class="t-bool">true</span><span class="t-punct">,</span>
-  <span class="t-key">"tx_hash"</span><span class="t-punct">:</span>  <span class="t-str">"TON_TX..."</span>
+  <span class="t-key">"success"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
+  <span class="t-key">"data"</span><span class="t-punct">:</span>    <span class="t-punct">{}</span>
 <span class="t-punct">}</span></pre>
       </div>
     </div>
-
     <div class="card" style="margin-bottom:0;">
       <div class="card-header">
-        <div class="card-title"><span class="dot red"></span> 4xx Error</div>
+        <div class="card-title"><span class="dot red"></span> 4xx / 5xx Error</div>
       </div>
       <div class="code-wrap">
         <button class="copy-btn" onclick="handleCopy(this, 'err')">
@@ -491,12 +585,11 @@
           Copy
         </button>
         <pre id="err"><span class="t-punct">{</span>
-  <span class="t-key">"success"</span><span class="t-punct">:</span>  <span class="t-bool">false</span><span class="t-punct">,</span>
-  <span class="t-key">"error"</span><span class="t-punct">:</span>    <span class="t-str">"Insufficient..."</span>
+  <span class="t-key">"success"</span><span class="t-punct">:</span> <span class="t-bool">false</span><span class="t-punct">,</span>
+  <span class="t-key">"error"</span><span class="t-punct">:</span>   <span class="t-str">"Invalid API key"</span>
 <span class="t-punct">}</span></pre>
       </div>
     </div>
-
   </div>
 
   <!-- Footer -->
