@@ -7,411 +7,229 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#07090f; --s1:#0c1120; --s2:#111827; --s3:#1a2336;
-  --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.1);
-  --blue:#3b82f6; --blue2:#2563eb; --blue3:#1d4ed8;
-  --green:#22c55e; --green2:#16a34a;
-  --gold:#f59e0b; --red:#ef4444; --red2:#dc2626;
-  --text:#f8fafc; --text2:#cbd5e1; --muted:#64748b; --muted2:#94a3b8;
-  --radius:16px;
+  --bg:#07090f;--s1:#0c1120;--s2:#111827;--s3:#1a2336;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);
+  --blue:#3b82f6;--blue2:#2563eb;--blue3:#1d4ed8;
+  --green:#22c55e;--green2:#16a34a;
+  --gold:#f59e0b;--red:#ef4444;--red2:#dc2626;--purple:#7c3aed;
+  --text:#f8fafc;--text2:#cbd5e1;--muted:#64748b;--muted2:#94a3b8;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{height:100%;overflow:hidden}
-body{
-  background:var(--bg); font-family:'Outfit',sans-serif;
-  color:var(--text); height:100%; overflow:hidden;
-  overscroll-behavior:none;
-}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--text);overscroll-behavior:none}
 
-/* ── SCREEN SYSTEM ── */
-.screen{
-  display:none; position:absolute; inset:0;
-  overflow-y:auto; overflow-x:hidden;
-  padding-bottom:80px;
-  -webkit-overflow-scrolling:touch;
-}
-.screen.active{display:block; animation:sIn .3s cubic-bezier(.4,0,.2,1) both}
-@keyframes sIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+/* SCREENS */
+.screen{display:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;-webkit-overflow-scrolling:touch}
+.screen.active{display:block;animation:sIn .28s cubic-bezier(.4,0,.2,1) both}
+@keyframes sIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── TOPBAR ── */
-.topbar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:20px 20px 0; position:sticky; top:0;
-  background:var(--bg); z-index:10;
-}
-.brand{display:flex; align-items:center; gap:11px}
-.brand-logo{
-  width:42px; height:42px; border-radius:50%; overflow:hidden;
-  flex-shrink:0; box-shadow:0 0 18px rgba(59,130,246,.35);
-}
-.brand-logo img{width:100%; height:100%; object-fit:cover}
-.brand-name{font-size:20px; font-weight:900; letter-spacing:.05em}
-.brand-name em{color:var(--blue); font-style:normal}
-.brand-sub{font-size:10px; color:var(--muted); letter-spacing:.06em; margin-top:1px}
-.topbar-right{display:flex; gap:8px}
-.icon-btn{
-  width:40px; height:40px; background:var(--s2);
-  border:1px solid var(--border2); border-radius:12px;
-  display:grid; place-items:center; cursor:pointer; transition:.2s;
-}
-.icon-btn:hover{border-color:var(--blue)}
-.icon-btn svg{width:18px; height:18px; stroke:var(--muted2); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 18px 0;position:sticky;top:0;background:var(--bg);z-index:10}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-logo{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 0 18px rgba(59,130,246,.3)}
+.brand-logo img{width:100%;height:100%;object-fit:cover}
+.brand-name{font-size:20px;font-weight:900;letter-spacing:.05em}
+.brand-name em{color:var(--blue);font-style:normal}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:.06em;margin-top:1px}
+.topbar-right{display:flex;gap:8px}
+.icon-btn{width:40px;height:40px;background:var(--s2);border:1px solid var(--border2);border-radius:12px;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.icon-btn:active{transform:scale(.9)}
+.icon-btn svg{width:18px;height:18px;stroke:var(--muted2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── BACK HEADER ── */
-.back-hdr{
-  display:flex; align-items:center; gap:13px;
-  padding:20px 20px 0; position:sticky; top:0;
-  background:var(--bg); z-index:10;
-}
-.back-btn{
-  width:38px; height:38px; background:var(--s2);
-  border:1px solid var(--border2); border-radius:11px;
-  display:grid; place-items:center; cursor:pointer;
-  transition:.2s; flex-shrink:0;
-}
-.back-btn:active{transform:scale(.92)}
-.back-btn svg{width:18px; height:18px; stroke:var(--text2); fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
-.back-title{font-size:18px; font-weight:700}
+/* BACK HEADER */
+.back-hdr{display:flex;align-items:center;gap:13px;padding:20px 18px 0;position:sticky;top:0;background:var(--bg);z-index:10}
+.back-btn{width:38px;height:38px;background:var(--s2);border:1px solid var(--border2);border-radius:11px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
+.back-btn:active{transform:scale(.9)}
+.back-btn svg{width:18px;height:18px;stroke:var(--text2);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.back-title{font-size:18px;font-weight:700}
 
-/* ── BALANCE BANNER ── */
-.banner{
-  margin:16px 16px 0; border-radius:22px; overflow:hidden;
-  position:relative; min-height:168px;
-  box-shadow:0 20px 50px rgba(29,78,216,.4);
-}
-.banner-img{
-  position:absolute; inset:0;
-  background:url('https://iili.io/BmUYlKG.png') center/cover no-repeat;
-}
-.banner-overlay{
-  position:absolute; inset:0;
-  background:linear-gradient(135deg,rgba(15,30,80,.55) 0%,rgba(10,20,60,.3) 100%);
-}
-.banner-content{position:relative; z-index:1; padding:22px 22px 20px}
-.banner-lbl{
-  display:flex; align-items:center; gap:8px;
-  font-size:12px; color:rgba(255,255,255,.75); font-weight:500;
-  letter-spacing:.05em; text-transform:uppercase;
-}
-.eye-btn{
-  width:22px; height:22px; cursor:pointer; opacity:.8;
-  display:grid; place-items:center;
-}
-.eye-btn svg{width:16px; height:16px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.banner-amt{
-  font-size:42px; font-weight:900; line-height:1.05;
-  margin-top:8px; text-shadow:0 2px 14px rgba(0,0,0,.4);
-  font-family:'Outfit',sans-serif; letter-spacing:-.01em;
-}
-.banner-sub{
-  font-size:13px; color:rgba(255,255,255,.6);
-  margin-top:5px; font-family:'JetBrains Mono',monospace;
-}
-.banner-badge{
-  position:absolute; top:20px; right:20px; z-index:2;
-  background:rgba(34,197,94,.18); border:1px solid rgba(34,197,94,.3);
-  border-radius:20px; padding:4px 12px;
-  font-size:11px; color:#4ade80; font-weight:700;
-}
+/* BANNER */
+.banner{margin:16px 16px 0;border-radius:22px;overflow:hidden;position:relative;min-height:164px;box-shadow:0 20px 50px rgba(29,78,216,.4)}
+.banner-img{position:absolute;inset:0;background:url('https://iili.io/BmUYlKG.png') center/cover no-repeat}
+.banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,20,60,.6) 0%,rgba(10,20,50,.25) 100%)}
+.banner-content{position:relative;z-index:1;padding:22px 22px 20px}
+.banner-lbl{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+.eye-btn{cursor:pointer;display:grid;place-items:center}
+.eye-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.banner-amt{font-size:42px;font-weight:900;line-height:1.05;margin-top:8px;text-shadow:0 2px 14px rgba(0,0,0,.4);letter-spacing:-.01em}
+.banner-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:5px;font-family:'JetBrains Mono',monospace}
+.banner-badge{position:absolute;top:20px;right:20px;z-index:2;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:#4ade80;font-weight:700}
 
-/* ── ACTION ROW ── */
-.act-row{
-  margin:12px 16px 0; background:var(--s1);
-  border:1px solid var(--border2); border-radius:20px;
-  display:flex; overflow:hidden;
-}
-.act-btn{
-  flex:1; padding:15px 6px; display:flex; flex-direction:column;
-  align-items:center; gap:7px; cursor:pointer; transition:.2s;
-  position:relative;
-}
-.act-btn:not(:last-child)::after{
-  content:''; position:absolute; right:0; top:18%; height:64%;
-  width:1px; background:var(--border2);
-}
+/* ACTION ROW */
+.act-row{margin:12px 16px 0;background:var(--s1);border:1px solid var(--border2);border-radius:20px;display:flex;overflow:hidden}
+.act-btn{flex:1;padding:15px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:.2s;position:relative}
+.act-btn:not(:last-child)::after{content:'';position:absolute;right:0;top:18%;height:64%;width:1px;background:var(--border2)}
 .act-btn:active{background:rgba(255,255,255,.04)}
-.act-ico{
-  width:44px; height:44px; border-radius:50%;
-  display:grid; place-items:center;
-}
-.act-ico svg{width:20px; height:20px; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
-.a-dep  .act-ico{background:rgba(34,197,94,.15)}
-.a-dep  .act-ico svg{stroke:#22c55e}
-.a-with .act-ico{background:rgba(59,130,246,.15)}
-.a-with .act-ico svg{stroke:#3b82f6}
-.a-hist .act-ico{background:rgba(139,92,246,.15)}
-.a-hist .act-ico svg{stroke:#8b5cf6}
-.act-lbl{font-size:11px; color:var(--muted2); font-weight:600; letter-spacing:.03em}
+.act-ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.act-ico svg{width:20px;height:20px;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.a-dep .act-ico{background:rgba(34,197,94,.15)}.a-dep .act-ico svg{stroke:#22c55e}
+.a-with .act-ico{background:rgba(59,130,246,.15)}.a-with .act-ico svg{stroke:#3b82f6}
+.a-hist .act-ico{background:rgba(139,92,246,.15)}.a-hist .act-ico svg{stroke:#8b5cf6}
+.act-lbl{font-size:11px;color:var(--muted2);font-weight:600;letter-spacing:.03em}
 
-/* ── CARD ── */
-.card{
-  margin:12px 16px 0; background:var(--s1);
-  border:1px solid var(--border2); border-radius:20px; overflow:hidden;
-}
-.card-hdr{
-  display:flex; justify-content:space-between; align-items:center;
-  padding:15px 18px 12px; border-bottom:1px solid var(--border);
-}
-.card-title{font-size:14px; font-weight:700; letter-spacing:.02em}
-.card-link{font-size:12px; color:var(--blue); cursor:pointer; font-weight:600}
-
-/* ── ASSET ROW ── */
-.asset-row{
-  display:flex; align-items:center; gap:13px;
-  padding:13px 18px; transition:background .18s; cursor:pointer;
-}
+/* CARD / ASSET */
+.card{margin:12px 16px 0;background:var(--s1);border:1px solid var(--border2);border-radius:20px;overflow:hidden}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;padding:15px 18px 12px;border-bottom:1px solid var(--border)}
+.card-title{font-size:14px;font-weight:700}
+.card-link{font-size:12px;color:var(--blue);cursor:pointer;font-weight:600}
+.asset-row{display:flex;align-items:center;gap:13px;padding:13px 18px;transition:background .18s;cursor:pointer}
 .asset-row:not(:last-child){border-bottom:1px solid var(--border)}
 .asset-row:active{background:rgba(255,255,255,.02)}
-.a-logo{width:42px; height:42px; border-radius:50%; flex-shrink:0; overflow:hidden}
-.a-logo img{width:100%; height:100%; object-fit:cover; border-radius:50%}
-.a-name{font-size:14px; font-weight:600}
-.a-sym{font-size:11px; color:var(--muted); margin-top:2px}
-.a-right{margin-left:auto; text-align:right}
-.a-bal{font-size:14px; font-weight:700; font-family:'JetBrains Mono',monospace}
-.a-usd{font-size:11px; color:var(--muted); margin-top:2px}
-.a-chg{font-size:10px; padding:2px 7px; border-radius:5px; display:inline-block; margin-top:3px; font-weight:700}
-.up  {background:rgba(34,197,94,.12);  color:#22c55e}
-.down{background:rgba(239,68,68,.12);  color:#ef4444}
+.a-logo{width:42px;height:42px;border-radius:50%;flex-shrink:0;overflow:hidden}
+.a-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.a-name{font-size:14px;font-weight:600}
+.a-sym{font-size:11px;color:var(--muted);margin-top:2px}
+.a-right{margin-left:auto;text-align:right}
+.a-bal{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.a-usd{font-size:11px;color:var(--muted);margin-top:2px}
+.a-chg{font-size:10px;padding:2px 7px;border-radius:5px;display:inline-block;margin-top:3px;font-weight:700}
+.up{background:rgba(34,197,94,.12);color:#22c55e}
+.down{background:rgba(239,68,68,.12);color:#ef4444}
 
-/* ── API ROW ── */
-.api-row{
-  margin:12px 16px 0; background:var(--s1);
-  border:1px solid var(--border2); border-radius:18px;
-  padding:14px 18px; display:flex; align-items:center;
-  gap:14px; cursor:pointer; transition:.2s;
-}
+/* API ROW */
+.api-row{margin:12px 16px 0;background:var(--s1);border:1px solid var(--border2);border-radius:18px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.2s}
 .api-row:active{background:var(--s2)}
-.api-ico{
-  width:44px; height:44px; flex-shrink:0;
-  background:linear-gradient(135deg,#1d4ed8,#0ea5e9);
-  border-radius:13px; display:grid; place-items:center;
-}
-.api-ico svg{width:22px; height:22px; stroke:#fff; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.api-t1{font-size:14px; font-weight:700}
-.api-t2{font-size:11px; color:var(--muted); margin-top:2px}
-.api-arr{margin-left:auto; color:var(--muted); font-size:20px; line-height:1}
+.api-ico{width:44px;height:44px;flex-shrink:0;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);border-radius:13px;display:grid;place-items:center}
+.api-ico svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.api-t1{font-size:14px;font-weight:700}
+.api-t2{font-size:11px;color:var(--muted);margin-top:2px}
+.api-arr{margin-left:auto;color:var(--muted);font-size:20px}
 
-/* ── SECTION LABEL ── */
-.sec-lbl{
-  font-size:10px; font-weight:800; letter-spacing:.12em;
-  text-transform:uppercase; color:var(--muted);
-  padding:18px 18px 8px;
-}
+/* TABS */
+.asset-tabs{display:flex;gap:8px;padding:14px 16px 0}
+.a-tab{padding:7px 20px;background:var(--s2);border:1px solid var(--border2);border-radius:20px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;letter-spacing:.03em}
+.a-tab.active{background:var(--blue);border-color:var(--blue);color:white}
 
-/* ── DEPOSIT ── */
-.dep-box{margin:14px 16px 0; background:var(--s1); border:1px solid var(--border2); border-radius:20px; padding:20px}
-.qr-area{display:flex; justify-content:center; margin-bottom:20px}
-.qr-wrap{width:138px; height:138px; background:white; border-radius:14px; display:grid; place-items:center; overflow:hidden; padding:6px}
-.qr-wrap img{width:100%; height:100%; border-radius:8px}
-.qr-ph{
-  width:138px; height:138px; background:var(--s2);
-  border:1px dashed var(--border2); border-radius:14px;
-  display:flex; flex-direction:column; align-items:center;
-  justify-content:center; gap:8px; color:var(--muted);
-  font-size:11px; text-align:center; padding:14px;
-}
-.qr-ph svg{width:28px; height:28px; stroke:var(--muted); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+/* SEC LABEL */
+.sec-lbl{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:18px 18px 8px}
 
-.field-lbl{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; margin-bottom:7px; font-weight:700}
-.copy-field{
-  background:var(--s2); border:1px solid var(--border2);
-  border-radius:13px; padding:12px 14px;
-  display:flex; align-items:center; gap:10px; margin-bottom:14px;
-}
-.copy-val{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--blue); word-break:break-all; flex:1}
-.copy-ico{
-  flex-shrink:0; cursor:pointer; opacity:.55; transition:.2s;
-  display:grid; place-items:center;
-}
-.copy-ico:hover{opacity:1}
-.copy-ico svg{width:17px; height:17px; stroke:var(--muted2); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-.memo-c{color:var(--gold) !important}
+/* DEPOSIT */
+.dep-box{margin:14px 16px 0;background:var(--s1);border:1px solid var(--border2);border-radius:20px;padding:20px}
+.qr-area{display:flex;justify-content:center;margin-bottom:20px}
+.qr-wrap{width:140px;height:140px;background:white;border-radius:14px;display:grid;place-items:center;overflow:hidden;padding:6px}
+.qr-wrap img{width:100%;height:100%;border-radius:8px}
+.qr-ph{width:140px;height:140px;background:var(--s2);border:1px dashed var(--border2);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:11px;text-align:center;padding:14px}
+.qr-ph svg{width:28px;height:28px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.field-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px;font-weight:700;display:flex;align-items:center;gap:5px}
+.copy-field{background:var(--s2);border:1px solid var(--border2);border-radius:13px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer;transition:.15s}
+.copy-field:active{background:var(--s3)}
+.copy-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue);word-break:break-all;flex:1}
+.copy-ico{flex-shrink:0;display:grid;place-items:center;opacity:.6}
+.copy-ico svg{width:17px;height:17px;stroke:var(--muted2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.memo-c{color:var(--gold)!important}
+.notice{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18);border-radius:13px;padding:12px 14px;font-size:12px;color:rgba(245,158,11,.9);line-height:1.65;display:flex;gap:9px;align-items:flex-start}
+.notice svg{width:16px;height:16px;flex-shrink:0;stroke:#f59e0b;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
 
-.notice{
-  background:rgba(245,158,11,.07); border:1px solid rgba(245,158,11,.18);
-  border-radius:13px; padding:12px 14px;
-  font-size:12px; color:rgba(245,158,11,.9); line-height:1.65;
-  display:flex; gap:9px; align-items:flex-start;
-}
-.notice svg{width:16px; height:16px; flex-shrink:0; stroke:#f59e0b; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-top:1px}
+/* BUTTONS */
+.btn{width:100%;padding:15px;border:none;border-radius:14px;color:white;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.18s;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:9px;letter-spacing:.02em;position:relative;overflow:hidden}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue3))}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--green2))}
+.btn-red{background:linear-gradient(135deg,var(--red),var(--red2))}
+.btn-purple{background:linear-gradient(135deg,var(--purple),#6d28d9)}
+.btn svg{width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-/* ── BUTTONS ── */
-.btn{
-  width:100%; padding:15px; border:none; border-radius:14px;
-  color:white; font-family:'Outfit',sans-serif; font-size:15px;
-  font-weight:700; cursor:pointer; transition:.2s; margin-top:14px;
-  display:flex; align-items:center; justify-content:center; gap:9px;
-  letter-spacing:.02em; position:relative; overflow:hidden;
-}
-.btn::after{content:''; position:absolute; inset:0; background:white; opacity:0; transition:.15s}
-.btn:active::after{opacity:.06}
-.btn:disabled{opacity:.45; cursor:not-allowed}
-.btn-blue  {background:linear-gradient(135deg,var(--blue),var(--blue3))}
-.btn-green {background:linear-gradient(135deg,var(--green),var(--green2))}
-.btn-red   {background:linear-gradient(135deg,var(--red),var(--red2))}
-.btn svg{width:18px; height:18px; stroke:white; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0}
-
-/* ── WITHDRAW FORM ── */
-.w-form{margin:14px 16px 0; background:var(--s1); border:1px solid var(--border2); border-radius:20px; padding:20px}
+/* WITHDRAW FORM */
+.w-form{margin:14px 16px 0;background:var(--s1);border:1px solid var(--border2);border-radius:20px;padding:20px}
 .fg{margin-bottom:16px}
-.i-lbl{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; display:block; margin-bottom:7px; font-weight:700}
-.i-wrap{position:relative}
-.i-field{
-  width:100%; background:var(--s2); border:1.5px solid var(--border2);
-  border-radius:13px; padding:13px 16px; color:var(--text);
-  font-family:'Outfit',sans-serif; font-size:14px; outline:none; transition:.2s;
-  -webkit-appearance:none;
-}
-.i-field:focus{border-color:var(--blue); box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.i-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;display:block;margin-bottom:7px;font-weight:700}
+.i-field{width:100%;background:var(--s2);border:1.5px solid var(--border2);border-radius:13px;padding:13px 16px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:.2s;-webkit-appearance:none}
+.i-field:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .i-field::placeholder{color:var(--muted)}
-.i-field.error{border-color:var(--red); box-shadow:0 0 0 3px rgba(239,68,68,.1)}
+.i-field.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.08)}
 .i-field.ok{border-color:var(--green)}
-.i-err{font-size:11px; color:var(--red); margin-top:5px; display:none}
-.i-err.show{display:block}
-.i-ok{font-size:11px; color:var(--green); margin-top:5px; display:none}
-.i-ok.show{display:block}
-
-.amt-field-wrap{position:relative}
-.amt-field-wrap .i-field{padding-right:72px; font-size:20px; font-weight:800; font-family:'JetBrains Mono',monospace; letter-spacing:-.01em}
-.max-btn{
-  position:absolute; right:12px; top:50%; transform:translateY(-50%);
-  font-size:11px; font-weight:800; color:var(--blue);
-  background:rgba(59,130,246,.12); padding:5px 11px; border-radius:8px;
-  cursor:pointer; letter-spacing:.04em; transition:.2s;
-}
+.i-msg{font-size:11px;margin-top:5px;display:none}
+.i-msg.show{display:block}
+.i-msg.err{color:var(--red)}
+.i-msg.ok{color:var(--green)}
+.amt-wrap{position:relative}
+.amt-wrap .i-field{padding-right:72px;font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.max-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;color:var(--blue);background:rgba(59,130,246,.12);padding:5px 11px;border-radius:8px;cursor:pointer;transition:.2s}
 .max-btn:hover{background:rgba(59,130,246,.22)}
-.avail-row{display:flex; justify-content:space-between; align-items:center; margin-top:7px}
-.avail-lbl{font-size:12px; color:var(--muted)}
-.avail-val{font-size:12px; color:var(--text2); font-weight:600; font-family:'JetBrains Mono',monospace}
+.avail-row{display:flex;justify-content:space-between;margin-top:7px}
+.avail-lbl{font-size:12px;color:var(--muted)}
+.avail-val{font-size:12px;color:var(--text2);font-weight:600;font-family:'JetBrains Mono',monospace}
+.detail-rows{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.d-row{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:11px 15px;display:flex;justify-content:space-between;align-items:center}
+.d-lbl{font-size:12px;color:var(--muted)}
+.d-val{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace}
 
-.detail-rows{display:flex; flex-direction:column; gap:6px; margin-top:4px}
-.d-row{
-  background:var(--s2); border:1px solid var(--border);
-  border-radius:12px; padding:11px 15px;
-  display:flex; justify-content:space-between; align-items:center;
-}
-.d-lbl{font-size:12px; color:var(--muted)}
-.d-val{font-size:13px; font-weight:700; font-family:'JetBrains Mono',monospace}
-
-/* ── ASSET TABS ── */
-.asset-tabs{display:flex; gap:8px; padding:14px 16px 0}
-.a-tab{
-  padding:7px 18px; background:var(--s2);
-  border:1px solid var(--border2); border-radius:20px;
-  font-size:12px; font-weight:700; color:var(--muted);
-  cursor:pointer; transition:.2s; letter-spacing:.03em;
-}
-.a-tab.active{background:var(--blue); border-color:var(--blue); color:white}
-
-/* ── HISTORY ── */
-.hist-filters{display:flex; gap:8px; padding:14px 16px 0; overflow-x:auto; scrollbar-width:none}
+/* HISTORY */
+.hist-filters{display:flex;gap:8px;padding:14px 16px 0;overflow-x:auto;scrollbar-width:none}
 .hist-filters::-webkit-scrollbar{display:none}
-.filt-btn{padding:7px 16px; background:var(--s2); border:1px solid var(--border2); border-radius:20px; font-size:12px; font-weight:700; color:var(--muted); cursor:pointer; transition:.2s; white-space:nowrap; flex-shrink:0}
-.filt-btn.active{background:var(--blue); border-color:var(--blue); color:white}
-.hist-list{padding:0 16px; margin-top:10px}
-.hist-item{display:flex; align-items:center; gap:13px; padding:13px 0; border-bottom:1px solid var(--border)}
-.hist-ico{width:42px; height:42px; border-radius:50%; flex-shrink:0; display:grid; place-items:center}
-.hist-ico svg{width:19px; height:19px; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
-.h-dep .hist-ico{background:rgba(34,197,94,.14)}
-.h-dep .hist-ico svg{stroke:#22c55e}
-.h-with .hist-ico{background:rgba(59,130,246,.14)}
-.h-with .hist-ico svg{stroke:#3b82f6}
-.h-type{font-size:14px; font-weight:600}
-.h-date{font-size:11px; color:var(--muted); margin-top:2px; font-family:'JetBrains Mono',monospace}
-.h-right{margin-left:auto; text-align:right}
-.h-amt{font-size:14px; font-weight:800; font-family:'JetBrains Mono',monospace}
-.h-amt.pos{color:var(--green)}
-.h-amt.neg{color:var(--blue)}
-.h-badge{font-size:10px; padding:2px 8px; border-radius:5px; display:inline-block; margin-top:3px; font-weight:700}
-.b-ok{background:rgba(34,197,94,.12); color:#22c55e}
-.hist-empty{text-align:center; padding:48px 20px; color:var(--muted)}
-.hist-empty svg{width:44px; height:44px; stroke:var(--muted); fill:none; stroke-width:1.5; margin-bottom:12px; stroke-linecap:round; stroke-linejoin:round}
-.hist-empty p{font-size:14px; margin-bottom:5px}
-.hist-empty span{font-size:12px; color:var(--muted)}
+.filt-btn{padding:7px 16px;background:var(--s2);border:1px solid var(--border2);border-radius:20px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;flex-shrink:0}
+.filt-btn.active{background:var(--blue);border-color:var(--blue);color:white}
+.hist-list{padding:0 16px;margin-top:10px}
+.hist-item{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--border)}
+.hist-ico{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:grid;place-items:center}
+.hist-ico svg{width:19px;height:19px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.h-dep .hist-ico{background:rgba(34,197,94,.14)}.h-dep .hist-ico svg{stroke:#22c55e}
+.h-with .hist-ico{background:rgba(59,130,246,.14)}.h-with .hist-ico svg{stroke:#3b82f6}
+.h-type{font-size:14px;font-weight:600}
+.h-date{font-size:11px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.h-right{margin-left:auto;text-align:right}
+.h-amt{font-size:14px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.h-amt.pos{color:var(--green)}.h-amt.neg{color:var(--blue)}
+.h-badge{font-size:10px;padding:2px 8px;border-radius:5px;display:inline-block;margin-top:3px;font-weight:700}
+.b-ok{background:rgba(34,197,94,.12);color:#22c55e}
+.hist-empty{text-align:center;padding:48px 20px;color:var(--muted)}
+.hist-empty svg{width:44px;height:44px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px}
+.hist-empty p{font-size:14px;margin-bottom:5px;color:var(--muted2)}
+.hist-empty span{font-size:12px}
 
-/* ── API / SETTINGS ── */
-.api-content{padding:0 16px; margin-top:14px}
-.api-card{background:var(--s1); border:1px solid var(--border2); border-radius:20px; padding:20px; margin-bottom:12px}
-.api-key-box{
-  background:var(--s2); border:1px solid var(--border2);
-  border-radius:12px; padding:12px 14px;
-  font-family:'JetBrains Mono',monospace; font-size:11px;
-  color:var(--blue); word-break:break-all; min-height:42px;
-  display:flex; align-items:center; margin-bottom:14px;
-}
-.api-key-box.empty{color:var(--muted); font-family:'Outfit',sans-serif; font-style:italic; font-size:12px}
+/* API SCREEN */
+.api-content{padding:0 16px;margin-top:14px}
+.api-card{background:var(--s1);border:1px solid var(--border2);border-radius:20px;padding:20px;margin-bottom:12px}
+.api-key-display{background:var(--s2);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;cursor:pointer;transition:.15s}
+.api-key-display:active{background:var(--s3)}
+.api-key-display .key-text{color:var(--blue);flex:1}
+.api-key-display.empty .key-text{color:var(--muted);font-family:'Outfit',sans-serif;font-style:italic;font-size:12px}
+.api-key-display svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.ep-list{display:flex;flex-direction:column;gap:7px;padding-bottom:10px}
+.ep-item{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:11px 14px;display:flex;align-items:flex-start;gap:11px}
+.ep-m{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;flex-shrink:0;margin-top:2px;letter-spacing:.04em}
+.m-get{background:rgba(34,197,94,.14);color:#22c55e}
+.m-post{background:rgba(59,130,246,.14);color:#3b82f6}
+.ep-path{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--text2);font-weight:500}
+.ep-desc{font-size:11px;color:var(--muted);margin-top:3px}
 
-.docs-btn{
-  width:100%; padding:15px; border-radius:14px; border:none;
-  background:linear-gradient(135deg,#7c3aed,#6d28d9);
-  color:white; font-family:'Outfit',sans-serif; font-size:15px;
-  font-weight:700; cursor:pointer; transition:.2s;
-  display:flex; align-items:center; justify-content:center; gap:9px;
-  letter-spacing:.02em; margin-bottom:12px;
-}
-.docs-btn:active{transform:scale(.98)}
-.docs-btn svg{width:18px; height:18px; stroke:white; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-
-.ep-list{display:flex; flex-direction:column; gap:7px}
-.ep-item{background:var(--s2); border:1px solid var(--border); border-radius:12px; padding:11px 14px; display:flex; align-items:flex-start; gap:11px}
-.ep-m{font-size:10px; font-weight:800; padding:3px 8px; border-radius:6px; font-family:'JetBrains Mono',monospace; flex-shrink:0; margin-top:2px; letter-spacing:.04em}
-.m-get {background:rgba(34,197,94,.14); color:#22c55e}
-.m-post{background:rgba(59,130,246,.14); color:#3b82f6}
-.ep-path{font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--text2); font-weight:500}
-.ep-desc{font-size:11px; color:var(--muted); margin-top:3px}
-
-/* ── BOTTOM NAV ── */
-.bot-nav{
-  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-  width:100%; max-width:480px;
-  background:rgba(7,9,15,.97); backdrop-filter:blur(24px);
-  border-top:1px solid var(--border2);
-  display:flex; padding:10px 0; z-index:100;
-  padding-bottom:max(10px, env(safe-area-inset-bottom));
-}
-.nav-it{flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; transition:.2s; padding:4px 0; position:relative}
-.nav-it:active{transform:scale(.9)}
-.nav-niw{width:44px; height:32px; display:grid; place-items:center; border-radius:10px; transition:.2s}
-.nav-ni svg{width:22px; height:22px; stroke:var(--muted); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:.2s}
-.nav-nl{font-size:9px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.06em; transition:.2s}
+/* BOTTOM NAV */
+.bot-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(7,9,15,.97);backdrop-filter:blur(24px);border-top:1px solid var(--border2);display:flex;padding:10px 0 max(10px,env(safe-area-inset-bottom));z-index:100}
+.nav-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:4px 0}
+.nav-it:active{transform:scale(.88)}
+.nav-niw{width:44px;height:32px;display:grid;place-items:center;border-radius:10px;transition:.2s}
+.nav-ni svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:.2s}
+.nav-nl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:.2s}
 .nav-it.active .nav-niw{background:rgba(59,130,246,.14)}
 .nav-it.active .nav-ni svg{stroke:var(--blue)}
 .nav-it.active .nav-nl{color:var(--blue)}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(10px);
-  background:var(--s2); border:1px solid var(--border2); border-radius:12px;
-  padding:10px 20px; font-size:13px; font-weight:500;
-  opacity:0; pointer-events:none; transition:.25s ease; white-space:nowrap; z-index:999;
-  box-shadow:0 8px 30px rgba(0,0,0,.4);
-}
-.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
-.toast.ok {border-color:rgba(34,197,94,.35); color:#4ade80}
-.toast.err{border-color:rgba(239,68,68,.35);  color:#f87171}
-.toast.inf{border-color:rgba(59,130,246,.35);  color:#60a5fa}
+/* LOCK BANNER */
+.lock-banner{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:14px;padding:14px 16px;margin:0 16px;display:flex;gap:12px;align-items:flex-start}
+.lock-banner svg{width:18px;height:18px;stroke:var(--red);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px}
+.lock-title{font-size:13px;font-weight:700;color:var(--red);margin-bottom:3px}
+.lock-sub{font-size:11px;color:var(--muted2);line-height:1.55}
 
-/* ── PULSE ANIMATION ── */
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--s2);border:1px solid var(--border2);border-radius:12px;padding:10px 20px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap;z-index:999;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{border-color:rgba(34,197,94,.35);color:#4ade80}
+.toast.err{border-color:rgba(239,68,68,.35);color:#f87171}
+.toast.inf{border-color:rgba(59,130,246,.35);color:#60a5fa}
+
+@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .pulse{animation:pulse 2s infinite}
-
-/* ── SHIMMER ── */
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.shimmer{
-  background:linear-gradient(90deg,var(--s2) 25%,var(--s3) 50%,var(--s2) 75%);
-  background-size:200% 100%;
-  animation:shimmer 1.6s infinite;
-  border-radius:8px;
-}
 </style>
 </head>
 <body>
 
-<!-- ══════════ WALLET SCREEN ══════════ -->
+<!-- ══ WALLET ══ -->
 <div class="screen active" id="s-wallet">
   <div class="topbar">
     <div class="brand">
-      <div class="brand-logo"><img src="https://iili.io/BDk3VLl.jpg" alt="SAFEORA"/></div>
+      <div class="brand-logo"><img src="https://iili.io/BDk3VLl.jpg" alt=""/></div>
       <div>
         <div class="brand-name">SAFE<em>ORA</em></div>
         <div class="brand-sub">Secure · Decentral · Vault</div>
@@ -427,7 +245,6 @@ body{
     </div>
   </div>
 
-  <!-- BALANCE BANNER -->
   <div class="banner">
     <div class="banner-img"></div>
     <div class="banner-overlay"></div>
@@ -444,46 +261,35 @@ body{
     <div class="banner-badge pulse">● Live</div>
   </div>
 
-  <!-- ACTIONS -->
   <div class="act-row">
     <div class="act-btn a-dep" onclick="go('s-deposit')">
-      <div class="act-ico">
-        <svg viewBox="0 0 24 24"><path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/></svg>
-      </div>
+      <div class="act-ico"><svg viewBox="0 0 24 24"><path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/></svg></div>
       <div class="act-lbl">Deposit</div>
     </div>
     <div class="act-btn a-with" onclick="go('s-withdraw')">
-      <div class="act-ico">
-        <svg viewBox="0 0 24 24"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg>
-      </div>
+      <div class="act-ico"><svg viewBox="0 0 24 24"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg></div>
       <div class="act-lbl">Withdraw</div>
     </div>
     <div class="act-btn a-hist" onclick="go('s-history')">
-      <div class="act-ico">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
+      <div class="act-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
       <div class="act-lbl">History</div>
     </div>
   </div>
 
-  <!-- ASSETS -->
   <div class="card">
-    <div class="card-hdr">
-      <div class="card-title">Assets</div>
-      <div class="card-link">Manage</div>
-    </div>
+    <div class="card-hdr"><div class="card-title">Assets</div><div class="card-link">Manage</div></div>
     <div class="asset-row">
       <div class="a-logo"><img src="https://iili.io/BmeGc8l.jpg" alt="TON"/></div>
-      <div><div class="a-name">TON Coin</div><div class="a-sym">TON · Mainnet</div></div>
+      <div><div class="a-name">TON Coin</div><div class="a-sym">The Open Network</div></div>
       <div class="a-right">
         <div class="a-bal" id="tonBal">0.000000</div>
         <div class="a-usd" id="tonUsdVal">$0.00</div>
-        <div class="a-chg up">+2.4%</div>
+        <div class="a-chg up" id="tonChg">+2.4%</div>
       </div>
     </div>
     <div class="asset-row">
       <div class="a-logo"><img src="https://iili.io/Bme5zTG.jpg" alt="USDT"/></div>
-      <div><div class="a-name">Tether</div><div class="a-sym">USDT · TON</div></div>
+      <div><div class="a-name">Tether USD</div><div class="a-sym">USDT · TON</div></div>
       <div class="a-right">
         <div class="a-bal">0.00</div>
         <div class="a-usd">$0.00</div>
@@ -492,30 +298,24 @@ body{
     </div>
   </div>
 
-  <!-- API ACCESS -->
   <div class="api-row" onclick="go('s-api')">
-    <div class="api-ico">
-      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    </div>
+    <div class="api-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
     <div><div class="api-t1">API Access</div><div class="api-t2" id="apiStatusTxt">Manage your developer API keys</div></div>
     <div class="api-arr">›</div>
   </div>
 </div>
 
 
-<!-- ══════════ DEPOSIT SCREEN ══════════ -->
+<!-- ══ DEPOSIT ══ -->
 <div class="screen" id="s-deposit">
   <div class="back-hdr">
-    <div class="back-btn" onclick="go('s-wallet')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </div>
+    <div class="back-btn" onclick="go('s-wallet')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
     <div class="back-title">Deposit</div>
   </div>
 
-  <!-- ASSET TABS -->
   <div class="asset-tabs">
-    <div class="a-tab active" onclick="switchDepAsset(this,'TON')">TON</div>
-    <div class="a-tab" onclick="switchDepAsset(this,'USDT')">USDT</div>
+    <div class="a-tab active" id="dep-tab-ton"  onclick="switchDep(this,'TON')">TON</div>
+    <div class="a-tab"        id="dep-tab-usdt" onclick="switchDep(this,'USDT')">USDT</div>
   </div>
 
   <div class="dep-box">
@@ -527,24 +327,23 @@ body{
     </div>
 
     <div class="field-lbl">Deposit Address</div>
-    <div class="copy-field">
+    <div class="copy-field" onclick="cp('dep-addr','Address')">
       <div class="copy-val" id="dep-addr">— Generate API key first</div>
-      <div class="copy-ico" onclick="cp('dep-addr','Address')">
-        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      </div>
+      <div class="copy-ico"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
     </div>
 
-    <div class="field-lbl">Memo / Comment <span style="color:var(--red);font-size:11px">* Required</span></div>
-    <div class="copy-field">
+    <div class="field-lbl">
+      Memo / Comment
+      <span style="color:var(--red);font-size:10px;font-weight:800;margin-left:4px">★ REQUIRED</span>
+    </div>
+    <div class="copy-field" onclick="cp('dep-memo','Memo')">
       <div class="copy-val memo-c" id="dep-memo">—</div>
-      <div class="copy-ico" onclick="cp('dep-memo','Memo')">
-        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      </div>
+      <div class="copy-ico"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
     </div>
 
     <div class="notice">
       <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Always include the <strong>Memo/Comment</strong> when sending TON. Transactions without memo will not be credited.
+      Always include the <strong style="color:var(--gold)">Memo/Comment</strong> when sending TON. Transactions without memo will not be credited.
     </div>
 
     <button class="btn btn-green" id="verify-btn" onclick="verifyDeposit()">
@@ -553,59 +352,53 @@ body{
     </button>
   </div>
 
-  <div class="sec-lbl">Network Details</div>
-  <div style="padding:0 16px; display:flex; flex-direction:column; gap:6px; padding-bottom:10px">
-    <div class="d-row"><div class="d-lbl">Network</div><div class="d-val" style="color:var(--blue)">TON Mainnet</div></div>
-    <div class="d-row"><div class="d-lbl">Min Deposit</div><div class="d-val">0.01 TON</div></div>
-    <div class="d-row"><div class="d-lbl">Confirmation Time</div><div class="d-val">~5 sec</div></div>
-    <div class="d-row"><div class="d-lbl">Network Fee</div><div class="d-val">0.001 TON</div></div>
+  <div class="sec-lbl" id="dep-net-label">Network Details · TON</div>
+  <div style="padding:0 16px;display:flex;flex-direction:column;gap:6px;padding-bottom:14px">
+    <div class="d-row"><div class="d-lbl">Network</div><div class="d-val" style="color:var(--blue)" id="dep-network">The Open Network</div></div>
+    <div class="d-row"><div class="d-lbl">Min Deposit</div><div class="d-val" id="dep-min">0.01 TON</div></div>
+    <div class="d-row"><div class="d-lbl">Confirmation</div><div class="d-val" id="dep-conf">~5 sec</div></div>
+    <div class="d-row"><div class="d-lbl">Network Fee</div><div class="d-val" id="dep-fee">0.001 TON</div></div>
   </div>
 </div>
 
 
-<!-- ══════════ WITHDRAW SCREEN ══════════ -->
+<!-- ══ WITHDRAW ══ -->
 <div class="screen" id="s-withdraw">
   <div class="back-hdr">
-    <div class="back-btn" onclick="go('s-wallet')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </div>
+    <div class="back-btn" onclick="go('s-wallet')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
     <div class="back-title">Withdraw</div>
   </div>
 
-  <!-- ASSET TABS -->
   <div class="asset-tabs">
-    <div class="a-tab active" onclick="switchWithdrawAsset(this,'TON')">TON</div>
-    <div class="a-tab" onclick="switchWithdrawAsset(this,'USDT')">USDT</div>
+    <div class="a-tab active" id="with-tab-ton"  onclick="switchWith(this,'TON')">TON</div>
+    <div class="a-tab"        id="with-tab-usdt" onclick="switchWith(this,'USDT')">USDT</div>
   </div>
 
   <div class="w-form">
     <div class="fg">
       <label class="i-lbl">Recipient TON Address</label>
-      <div class="i-wrap">
-        <input class="i-field" id="w-addr" type="text" placeholder="EQxxxxxxxxxxxxxxxxxxxx" oninput="validateAddr()"/>
-      </div>
-      <div class="i-err" id="addr-err">Invalid TON address format</div>
-      <div class="i-ok" id="addr-ok">Valid address ✓</div>
+      <input class="i-field" id="w-addr" type="text" placeholder="EQxxxxxxxxxxxxxxxxxxxx" oninput="valAddr()"/>
+      <div class="i-msg err" id="addr-err">Invalid TON address format (must start with EQ or UQ)</div>
+      <div class="i-msg ok"  id="addr-ok">Valid address ✓</div>
     </div>
-
     <div class="fg">
       <label class="i-lbl" id="amt-lbl">Amount (TON)</label>
-      <div class="amt-field-wrap">
-        <input class="i-field" id="w-amt" type="number" placeholder="0.00" step="0.001" oninput="validateAmt()"/>
+      <div class="amt-wrap">
+        <input class="i-field" id="w-amt" type="number" placeholder="0.00" step="0.001" oninput="valAmt()"/>
         <div class="max-btn" onclick="setMax()">MAX</div>
       </div>
       <div class="avail-row">
         <span class="avail-lbl">Available</span>
         <span class="avail-val" id="w-avail">0.000000 TON</span>
       </div>
-      <div class="i-err" id="amt-err">Insufficient balance</div>
+      <div class="i-msg err" id="amt-err">Insufficient balance</div>
     </div>
 
     <div class="sec-lbl" style="padding:0 0 8px">Transaction Details</div>
     <div class="detail-rows">
-      <div class="d-row"><div class="d-lbl">Network Fee</div><div class="d-val" id="net-fee">0.001 TON</div></div>
-      <div class="d-row"><div class="d-lbl">Min Withdraw</div><div class="d-val" id="min-with">0.01 TON</div></div>
-      <div class="d-row"><div class="d-lbl">You Will Receive</div><div class="d-val" id="recv-amt" style="color:var(--green)">0.000 TON</div></div>
+      <div class="d-row"><div class="d-lbl">Network Fee</div><div class="d-val" id="w-fee">0.001 TON</div></div>
+      <div class="d-row"><div class="d-lbl">Min Withdraw</div><div class="d-val" id="w-min">0.01 TON</div></div>
+      <div class="d-row"><div class="d-lbl">You Will Receive</div><div class="d-val" id="recv-val" style="color:var(--green)">0.000 TON</div></div>
     </div>
 
     <button class="btn btn-red" id="w-btn" onclick="doWithdraw()">
@@ -614,54 +407,60 @@ body{
     </button>
   </div>
 </div>
-<!-- ══════════ HISTORY SCREEN ══════════ -->
+<!-- ══ HISTORY ══ -->
 <div class="screen" id="s-history">
   <div class="back-hdr">
-    <div class="back-btn" onclick="go('s-wallet')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </div>
+    <div class="back-btn" onclick="go('s-wallet')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
     <div class="back-title">History</div>
   </div>
-
   <div class="hist-filters">
     <div class="filt-btn active" onclick="filt(this,'all')">All</div>
     <div class="filt-btn" onclick="filt(this,'deposit')">Deposits</div>
     <div class="filt-btn" onclick="filt(this,'withdraw')">Withdrawals</div>
   </div>
-
   <div class="hist-list" id="hist-list">
     <div class="hist-empty">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <p>No transactions yet</p>
-      <span>Your transaction history will appear here</span>
+      <span>Your history will appear here after your first deposit</span>
     </div>
   </div>
 </div>
 
 
-<!-- ══════════ API / SETTINGS SCREEN ══════════ -->
+<!-- ══ API / SETTINGS ══ -->
 <div class="screen" id="s-api">
   <div class="back-hdr">
-    <div class="back-btn" onclick="go('s-wallet')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </div>
+    <div class="back-btn" onclick="go('s-wallet')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
     <div class="back-title">Settings & API</div>
   </div>
 
   <div class="api-content">
 
-    <!-- READ DOCUMENTATION BUTTON -->
-    <button class="docs-btn" onclick="openDocs()">
+    <!-- LOCK BANNER — shows when locked -->
+    <div class="lock-banner" id="lock-banner" style="display:none;margin-bottom:12px">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div>
+        <div class="lock-title">API Key Locked</div>
+        <div class="lock-sub" id="lock-msg">You cannot create a new API key for 48 hours after creation.</div>
+      </div>
+    </div>
+
+    <!-- DOCS BUTTON -->
+    <button class="btn btn-purple" style="margin:0 0 12px" onclick="window.open('/docs','_blank')">
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       Read Documentation
     </button>
 
     <div class="api-card">
       <div class="field-lbl" style="margin-bottom:8px">User ID</div>
-      <input class="i-field" id="uid-input" type="text" placeholder="Enter your User ID (e.g. user_12345)" style="margin-bottom:14px"/>
+      <input class="i-field" id="uid-input" type="text" placeholder="Enter your User ID" style="margin-bottom:14px"/>
 
-      <div class="field-lbl" style="margin-bottom:8px">Your API Key</div>
-      <div class="api-key-box empty" id="api-key-box">No API key yet — enter User ID and generate</div>
+      <div class="field-lbl" style="margin-bottom:8px">Your API Key <span style="color:var(--muted);font-size:10px">(tap to copy)</span></div>
+      <div class="api-key-display empty" id="api-key-box" onclick="copyApiKey()">
+        <span class="key-text">No API key — enter User ID and generate</span>
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </div>
 
       <button class="btn btn-blue" onclick="createApi()" id="gen-btn">
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -670,125 +469,117 @@ body{
     </div>
 
     <div class="sec-lbl" style="padding:0 0 8px">API Endpoints</div>
-    <div class="ep-list" style="padding-bottom:10px">
-      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/register</div><div class="ep-desc">Register account & generate API key</div></div></div>
+    <div class="ep-list">
+      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/register</div><div class="ep-desc">Register & get API key (48h lock)</div></div></div>
       <div class="ep-item"><div class="ep-m m-get">GET</div><div><div class="ep-path">/api/balance</div><div class="ep-desc">Get wallet balance</div></div></div>
-      <div class="ep-item"><div class="ep-m m-get">GET</div><div><div class="ep-path">/api/deposit/info</div><div class="ep-desc">Get deposit address & memo</div></div></div>
-      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/deposit/verify</div><div class="ep-desc">Verify on-chain deposit</div></div></div>
-      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/withdraw</div><div class="ep-desc">Withdraw TON to address</div></div></div>
-      <div class="ep-item"><div class="ep-m m-get">GET</div><div><div class="ep-path">/api/transactions</div><div class="ep-desc">Transaction history list</div></div></div>
+      <div class="ep-item"><div class="ep-m m-get">GET</div><div><div class="ep-path">/api/deposit/info</div><div class="ep-desc">Deposit address, memo & network details</div></div></div>
+      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/deposit/verify</div><div class="ep-desc">Verify on-chain deposit & credit balance</div></div></div>
+      <div class="ep-item"><div class="ep-m m-post">POST</div><div><div class="ep-path">/api/withdraw</div><div class="ep-desc">Withdraw TON/USDT to external address</div></div></div>
+      <div class="ep-item"><div class="ep-m m-get">GET</div><div><div class="ep-path">/api/transactions</div><div class="ep-desc">Last 50 transactions</div></div></div>
     </div>
   </div>
 </div>
-<!-- ══════════ BOTTOM NAV ══════════ -->
+
+
+<!-- ══ BOTTOM NAV ══ -->
 <div class="bot-nav">
   <div class="nav-it active" id="nav-wallet" onclick="go('s-wallet')">
-    <div class="nav-niw">
-      <div class="nav-ni">
-        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      </div>
-    </div>
+    <div class="nav-niw"><div class="nav-ni"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div></div>
     <div class="nav-nl">Wallet</div>
   </div>
   <div class="nav-it" id="nav-deposit" onclick="go('s-deposit')">
-    <div class="nav-niw">
-      <div class="nav-ni">
-        <svg viewBox="0 0 24 24"><path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/></svg>
-      </div>
-    </div>
+    <div class="nav-niw"><div class="nav-ni"><svg viewBox="0 0 24 24"><path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/></svg></div></div>
     <div class="nav-nl">Deposit</div>
   </div>
   <div class="nav-it" id="nav-withdraw" onclick="go('s-withdraw')">
-    <div class="nav-niw">
-      <div class="nav-ni">
-        <svg viewBox="0 0 24 24"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg>
-      </div>
-    </div>
+    <div class="nav-niw"><div class="nav-ni"><svg viewBox="0 0 24 24"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg></div></div>
     <div class="nav-nl">Withdraw</div>
   </div>
   <div class="nav-it" id="nav-history" onclick="go('s-history')">
-    <div class="nav-niw">
-      <div class="nav-ni">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-    </div>
+    <div class="nav-niw"><div class="nav-ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
     <div class="nav-nl">History</div>
   </div>
   <div class="nav-it" id="nav-api" onclick="go('s-api')">
-    <div class="nav-niw">
-      <div class="nav-ni">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      </div>
-    </div>
+    <div class="nav-niw"><div class="nav-ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div></div>
     <div class="nav-nl">Settings</div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-const API_URL  = "https://safeora.onrender.com"
-const TON_USD  = 2.2
-const TON_FEE  = 0.001
-const TON_MIN  = 0.01
-const USDT_MIN = 0.01
 
-let hidden = false
-let histFilter = 'all'
-let currentWithdrawAsset = 'TON'
+<!-- ══ JAVASCRIPT ══ -->
+<script>
+const API_URL = ""  // Same origin — সার্ভার থেকে serve হচ্ছে তাই empty
+let hidden       = false
+let histFilter   = 'all'
+let curWithAsset = 'TON'
+let curDepAsset  = 'TON'
+let settings     = {
+  ton_min_deposit:0.01, ton_min_withdraw:0.01, ton_network_fee:0.001,
+  usdt_min_deposit:0.01, usdt_min_withdraw:0.01, usdt_network_fee:0,
+  ton_price_usd:2.2, network_name:'The Open Network', confirmation_time:'~5 sec'
+}
 
 let S = {
   apiKey  : localStorage.getItem('sf_key')  || '',
   userId  : localStorage.getItem('sf_uid')  || '',
   depAddr : localStorage.getItem('sf_addr') || '',
   depMemo : localStorage.getItem('sf_memo') || '',
-  balance : 0,
-  txs     : []
+  balance : 0, txs: []
 }
 
-// ── SCREENS ──
-const SCREENS  = ['s-wallet','s-deposit','s-withdraw','s-history','s-api']
-const NAV_MAP  = {'s-wallet':'nav-wallet','s-deposit':'nav-deposit','s-withdraw':'nav-withdraw','s-history':'nav-history','s-api':'nav-api'}
+const SCREENS = ['s-wallet','s-deposit','s-withdraw','s-history','s-api']
+const NAV_MAP = {'s-wallet':'nav-wallet','s-deposit':'nav-deposit','s-withdraw':'nav-withdraw','s-history':'nav-history','s-api':'nav-api'}
 
 function go(id) {
   SCREENS.forEach(s => document.getElementById(s).classList.remove('active'))
   document.getElementById(id).classList.add('active')
   document.querySelectorAll('.nav-it').forEach(n => n.classList.remove('active'))
   if (NAV_MAP[id]) document.getElementById(NAV_MAP[id]).classList.add('active')
-  if (id === 's-history')  { loadHistory(); renderHistory() }
-  if (id === 's-withdraw') updateWithdrawUI()
-  if (id === 's-deposit')  populateDeposit()
+  if (id==='s-history')  { loadHistory(); renderHistory() }
+  if (id==='s-withdraw') updateWithUI()
+  if (id==='s-deposit')  populateDep()
 }
 
-// ── INIT ──
-window.addEventListener('load', () => {
+// INIT
+window.addEventListener('load', async () => {
+  await loadSettings()
   if (S.apiKey) { showApiKey(S.apiKey); loadBalance(); loadHistory() }
-  populateDeposit()
   if (S.userId) document.getElementById('uid-input').value = S.userId
-  updateWithdrawUI()
+  populateDep()
+  updateWithUI()
 })
 
-// ── BALANCE ──
+// LOAD SETTINGS FROM SERVER
+async function loadSettings() {
+  // settings are public — no auth needed for display
+  try {
+    const r = await fetch('/admin/settings', { headers:{'admin-secret': ''} })
+    // If no admin secret, server returns 403 — use defaults
+  } catch(e) {}
+}
+
+// BALANCE
 async function loadBalance() {
+  if (!S.apiKey) return
   const btn = document.getElementById('refresh-btn')
   btn.querySelector('svg').style.animation = 'spin .8s linear infinite'
-  if (!S.apiKey) { btn.querySelector('svg').style.animation=''; return }
   try {
-    const r = await fetch(API_URL+'/api/balance',{headers:{'x-api-key':S.apiKey}})
+    const r = await fetch('/api/balance', {headers:{'x-api-key':S.apiKey}})
     const d = await r.json()
     if (d.success) { S.balance = parseFloat(d.balance)||0; updateUI() }
   } catch(e) { toast('Connection error','err') }
-  btn.querySelector('svg').style.animation = ''
+  finally { btn.querySelector('svg').style.animation = '' }
 }
 
 function updateUI() {
-  const b = S.balance
-  const usd = (b * TON_USD).toFixed(2)
+  const b = S.balance, usd = (b * settings.ton_price_usd).toFixed(2)
   document.getElementById('totalUsd').textContent  = hidden ? '$••••' : '$'+usd
   document.getElementById('tonSub').textContent    = hidden ? '≈ ••••••' : '≈ '+b.toFixed(6)+' TON'
   document.getElementById('tonBal').textContent    = hidden ? '••••••' : b.toFixed(6)
   document.getElementById('tonUsdVal').textContent = hidden ? '••••' : '$'+usd
-  updateWithdrawUI()
+  updateWithUI()
 }
 
 function toggleHide() {
@@ -800,239 +591,256 @@ function toggleHide() {
   updateUI()
 }
 
-// ── CREATE API ──
+// CREATE API — 48H LOCK
 async function createApi() {
   const uid = document.getElementById('uid-input').value.trim()
   if (!uid) { toast('Enter a User ID','err'); return }
+
   const btn = document.getElementById('gen-btn')
-  btn.disabled = true
-  btn.innerHTML = '<svg viewBox="0 0 24 24" style="animation:spin .8s linear infinite;width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Generating...'
+  btnLoad(btn, 'Generating...')
+
   try {
-    const r = await fetch(API_URL+'/api/register',{
+    const r = await fetch('/api/register', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({user_id:uid})
+      body: JSON.stringify({user_id: uid})
     })
     const d = await r.json()
+
+    if (d.locked) {
+      // Show lock banner
+      const lb = document.getElementById('lock-banner')
+      const lm = document.getElementById('lock-msg')
+      lb.style.display = 'flex'
+      lm.textContent = `API already exists for this User ID. You can create a new one in ${d.remaining_hours} hour(s).`
+      // Still show old key
+      if (d.api_key) {
+        S.apiKey = d.api_key; S.userId = uid
+        localStorage.setItem('sf_key', S.apiKey); localStorage.setItem('sf_uid', uid)
+        showApiKey(S.apiKey)
+        loadBalance()
+      }
+      toast(`Locked — ${d.remaining_hours}h remaining`,'err')
+      return
+    }
+
     if (d.success) {
+      document.getElementById('lock-banner').style.display = 'none'
       S.apiKey=d.api_key; S.userId=uid
       S.depAddr=d.deposit_info?.address||''; S.depMemo=d.deposit_info?.memo||''
-      localStorage.setItem('sf_key',S.apiKey); localStorage.setItem('sf_uid',S.userId)
+      localStorage.setItem('sf_key',S.apiKey); localStorage.setItem('sf_uid',uid)
       localStorage.setItem('sf_addr',S.depAddr); localStorage.setItem('sf_memo',S.depMemo)
-      showApiKey(S.apiKey); populateDeposit(); loadBalance()
+      showApiKey(S.apiKey); populateDep(); loadBalance()
       toast('API key generated!','ok')
-    } else { toast(d.error||'Error occurred','err') }
-  } catch(e) { toast('Server connection failed','err') }
-  finally {
-    btn.disabled=false
-    btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Generate API Key'
-  }
+    } else {
+      toast(d.error||'Error','err')
+    }
+  } catch(e) { toast('Server error','err') }
+  finally { btnReset(btn, '<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Generate API Key') }
 }
 
 function showApiKey(key) {
   const b = document.getElementById('api-key-box')
-  b.textContent = key; b.classList.remove('empty')
-  document.getElementById('apiStatusTxt').textContent = 'Key active: '+key.slice(0,16)+'...'
+  b.querySelector('.key-text').textContent = key
+  b.classList.remove('empty')
+  document.getElementById('apiStatusTxt').textContent = 'Key active: '+key.slice(0,18)+'...'
 }
 
-// ── DEPOSIT ──
-function populateDeposit() {
+function copyApiKey() {
+  if (!S.apiKey) { toast('No API key yet','err'); return }
+  copyText(S.apiKey, 'API Key')
+}
+
+// DEPOSIT
+function populateDep() {
   document.getElementById('dep-addr').textContent = S.depAddr || '— Generate API key first'
   document.getElementById('dep-memo').textContent = S.depMemo || '—'
   const qa = document.getElementById('qr-area')
   if (S.depAddr) {
-    qa.innerHTML = `<div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=126x126&data=${encodeURIComponent(S.depAddr)}" alt="QR"/></div>`
+    qa.innerHTML = `<div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(S.depAddr)}" alt="QR"/></div>`
   }
+  updateDepDetails()
 }
 
-function switchDepAsset(el, asset) {
+function switchDep(el, asset) {
   document.querySelectorAll('#s-deposit .a-tab').forEach(t=>t.classList.remove('active'))
-  el.classList.add('active')
+  el.classList.add('active'); curDepAsset = asset; updateDepDetails()
+}
+
+function updateDepDetails() {
+  const iU = curDepAsset === 'USDT'
+  document.getElementById('dep-net-label').textContent = `Network Details · ${curDepAsset}`
+  document.getElementById('dep-network').textContent   = settings.network_name
+  document.getElementById('dep-min').textContent       = (iU ? settings.usdt_min_deposit : settings.ton_min_deposit) + ' ' + curDepAsset
+  document.getElementById('dep-conf').textContent      = settings.confirmation_time
+  document.getElementById('dep-fee').textContent       = (iU ? settings.usdt_network_fee : settings.ton_network_fee) + ' ' + curDepAsset
 }
 
 async function verifyDeposit() {
   if (!S.apiKey) { toast('Generate API key first','err'); return }
   const btn = document.getElementById('verify-btn')
-  btn.disabled=true
-  btn.innerHTML='<svg viewBox="0 0 24 24" style="animation:spin .8s linear infinite;width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking blockchain...'
+  btnLoad(btn, 'Scanning blockchain...')
   try {
-    const r = await fetch(API_URL+'/api/deposit/verify',{method:'POST',headers:{'x-api-key':S.apiKey}})
+    const r = await fetch('/api/deposit/verify', {method:'POST', headers:{'x-api-key':S.apiKey}})
     const d = await r.json()
     if (d.success) {
-      toast(d.message,'ok'); S.balance=d.new_balance||S.balance; updateUI(); loadHistory()
-    } else { toast(d.message||'No new deposit found','err') }
-  } catch(e) { toast('Server connection failed','err') }
-  finally {
-    btn.disabled=false
-    btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg> Verify Deposit'
-  }
+      toast(d.message, 'ok')
+      S.balance = d.new_balance || S.balance; updateUI(); loadHistory()
+    } else {
+      toast(d.message || 'No new deposit found', 'err')
+    }
+  } catch(e) { toast('Server error','err') }
+  finally { btnReset(btn, '<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg> Verify Deposit') }
 }
 
-// ── WITHDRAW ──
-function switchWithdrawAsset(el, asset) {
+// WITHDRAW
+function switchWith(el, asset) {
   document.querySelectorAll('#s-withdraw .a-tab').forEach(t=>t.classList.remove('active'))
-  el.classList.add('active')
-  currentWithdrawAsset = asset
-  updateWithdrawUI()
+  el.classList.add('active'); curWithAsset = asset; updateWithUI()
 }
 
-function updateWithdrawUI() {
-  const isUSDT = currentWithdrawAsset === 'USDT'
-  document.getElementById('amt-lbl').textContent = isUSDT ? 'Amount (USDT)' : 'Amount (TON)'
-  document.getElementById('net-fee').textContent = isUSDT ? '0 USDT' : '0.001 TON'
-  document.getElementById('min-with').textContent = isUSDT ? '0.01 USDT' : '0.01 TON'
-  document.getElementById('w-avail').textContent = isUSDT ? '0.00 USDT' : S.balance.toFixed(6)+' TON'
-  document.getElementById('recv-amt').textContent = '0.000 ' + currentWithdrawAsset
-  document.getElementById('w-amt').placeholder = '0.00'
-  validateAmt()
+function updateWithUI() {
+  const iU = curWithAsset === 'USDT'
+  document.getElementById('amt-lbl').textContent   = `Amount (${curWithAsset})`
+  document.getElementById('w-fee').textContent     = (iU ? settings.usdt_network_fee : settings.ton_network_fee) + ' ' + curWithAsset
+  document.getElementById('w-min').textContent     = (iU ? settings.usdt_min_withdraw : settings.ton_min_withdraw) + ' ' + curWithAsset
+  document.getElementById('w-avail').textContent   = iU ? '0.00 USDT' : S.balance.toFixed(6)+' TON'
+  document.getElementById('recv-val').textContent  = '0.000 ' + curWithAsset
 }
 
 function setMax() {
-  const isUSDT = currentWithdrawAsset === 'USDT'
-  document.getElementById('w-amt').value = isUSDT ? '0.00' : Math.max(0, S.balance - TON_FEE).toFixed(6)
-  validateAmt()
+  const iU = curWithAsset === 'USDT'
+  document.getElementById('w-amt').value = iU ? '0.00' : Math.max(0, S.balance - settings.ton_network_fee).toFixed(6)
+  valAmt()
 }
 
-function validateAddr() {
-  const addr = document.getElementById('w-addr').value.trim()
-  const errEl = document.getElementById('addr-err')
-  const okEl  = document.getElementById('addr-ok')
-  const field = document.getElementById('w-addr')
-  if (!addr) { field.classList.remove('error','ok'); errEl.classList.remove('show'); okEl.classList.remove('show'); return true }
-  // TON address: starts with EQ/UQ, 48 chars base64
-  const valid = /^[EU]Q[A-Za-z0-9_-]{46}$/.test(addr)
-  field.classList.toggle('error', !valid)
-  field.classList.toggle('ok', valid)
-  errEl.classList.toggle('show', !valid)
-  okEl.classList.toggle('show', valid)
-  return valid
+function valAddr() {
+  const v = document.getElementById('w-addr').value.trim()
+  const f = document.getElementById('w-addr')
+  const eE = document.getElementById('addr-err'), oE = document.getElementById('addr-ok')
+  if (!v) { f.classList.remove('err','ok'); eE.classList.remove('show'); oE.classList.remove('show'); return true }
+  const ok = /^[EU]Q[A-Za-z0-9_-]{46}$/.test(v)
+  f.classList.toggle('err',!ok); f.classList.toggle('ok',ok)
+  eE.classList.toggle('show',!ok); oE.classList.toggle('show',ok)
+  return ok
 }
 
-function validateAmt() {
-  const amt   = parseFloat(document.getElementById('w-amt').value) || 0
-  const errEl = document.getElementById('amt-err')
-  const field = document.getElementById('w-amt')
-  const isUSDT = currentWithdrawAsset === 'USDT'
-  const minAmt = isUSDT ? USDT_MIN : TON_MIN
-  const maxAmt = isUSDT ? 0 : S.balance
-  const fee    = isUSDT ? 0 : TON_FEE
-  let errMsg = ''
-  if (amt > 0 && amt < minAmt) errMsg = `Minimum withdraw is ${minAmt} ${currentWithdrawAsset}`
-  else if (!isUSDT && amt > S.balance) errMsg = 'Insufficient TON balance'
-  field.classList.toggle('error', !!errMsg && amt > 0)
-  errEl.textContent = errMsg
-  errEl.classList.toggle('show', !!errMsg && amt > 0)
-  // update receive amount
+function valAmt() {
+  const amt  = parseFloat(document.getElementById('w-amt').value) || 0
+  const iU   = curWithAsset === 'USDT'
+  const minW = iU ? settings.usdt_min_withdraw : settings.ton_min_withdraw
+  const fee  = iU ? settings.usdt_network_fee  : settings.ton_network_fee
+  const f    = document.getElementById('w-amt')
+  const eE   = document.getElementById('amt-err')
+  let err = ''
+  if (amt > 0 && amt < minW) err = `Minimum is ${minW} ${curWithAsset}`
+  else if (!iU && amt > S.balance) err = 'Insufficient TON balance'
+  f.classList.toggle('err', !!err && amt > 0)
+  eE.textContent = err; eE.classList.toggle('show', !!err && amt > 0)
   const recv = Math.max(0, amt - fee)
-  document.getElementById('recv-amt').textContent = recv.toFixed(4)+' '+currentWithdrawAsset
-  return !errMsg
+  document.getElementById('recv-val').textContent = recv.toFixed(4) + ' ' + curWithAsset
+  return !err
 }
 
 async function doWithdraw() {
   if (!S.apiKey) { toast('Generate API key first','err'); return }
-  const addr   = document.getElementById('w-addr').value.trim()
-  const amt    = parseFloat(document.getElementById('w-amt').value)
-  const isUSDT = currentWithdrawAsset === 'USDT'
-  const minAmt = isUSDT ? USDT_MIN : TON_MIN
-
-  if (!validateAddr()) { toast('Invalid TON address','err'); return }
-  if (!amt || amt <= 0) { toast('Enter an amount','err'); return }
-  if (amt < minAmt) { toast(`Minimum is ${minAmt} ${currentWithdrawAsset}`,'err'); return }
-  if (!isUSDT && amt > S.balance) { toast('Insufficient balance','err'); return }
+  const addr = document.getElementById('w-addr').value.trim()
+  const amt  = parseFloat(document.getElementById('w-amt').value)
+  const iU   = curWithAsset === 'USDT'
+  if (!valAddr()) { toast('Invalid TON address','err'); return }
+  if (!amt||amt<=0) { toast('Enter an amount','err'); return }
+  if (!valAmt()) return
 
   const btn = document.getElementById('w-btn')
-  btn.disabled=true
-  btn.innerHTML='<svg viewBox="0 0 24 24" style="animation:spin .8s linear infinite;width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Processing...'
+  btnLoad(btn, 'Processing...')
   try {
-    const r = await fetch(API_URL+'/api/withdraw',{
+    const r = await fetch('/api/withdraw', {
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':S.apiKey},
-      body:JSON.stringify({wallet:addr, amount:amt})
+      body: JSON.stringify({wallet:addr, amount:amt, asset:curWithAsset})
     })
     const d = await r.json()
     if (d.success) {
       toast('Withdrawal successful!','ok')
-      S.balance=d.new_balance||S.balance; updateUI()
-      document.getElementById('w-addr').value=''
-      document.getElementById('w-amt').value=''
+      S.balance = d.new_balance || S.balance; updateUI()
+      document.getElementById('w-addr').value = ''
+      document.getElementById('w-amt').value  = ''
       document.getElementById('w-addr').classList.remove('ok')
       document.getElementById('addr-ok').classList.remove('show')
-      document.getElementById('recv-amt').textContent='0.000 '+currentWithdrawAsset
       loadHistory()
-    } else { toast(d.error||'Withdrawal failed','err') }
-  } catch(e) { toast('Server connection failed','err') }
-  finally {
-    btn.disabled=false
-    btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg> Confirm Withdraw'
-  }
+    } else { toast(d.error||'Failed','err') }
+  } catch(e) { toast('Server error','err') }
+  finally { btnReset(btn, '<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:white;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/></svg> Confirm Withdraw') }
 }
 
-// ── HISTORY ──
+// HISTORY
 async function loadHistory() {
   if (!S.apiKey) return
   try {
-    const r = await fetch(API_URL+'/api/transactions',{headers:{'x-api-key':S.apiKey}})
+    const r = await fetch('/api/transactions', {headers:{'x-api-key':S.apiKey}})
     const d = await r.json()
-    if (d.success) { S.txs=d.transactions||[]; renderHistory() }
+    if (d.success) { S.txs = d.transactions||[]; renderHistory() }
   } catch(e) {}
 }
 
-function filt(el,f) {
+function filt(el, f) {
   document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('active'))
-  el.classList.add('active'); histFilter=f; renderHistory()
+  el.classList.add('active'); histFilter = f; renderHistory()
 }
 
 function renderHistory() {
   const list = document.getElementById('hist-list')
   const txs  = histFilter==='all' ? S.txs : S.txs.filter(t=>t.type===histFilter)
   if (!txs.length) {
-    list.innerHTML=`<div class="hist-empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>No transactions yet</p><span>Your history will appear here</span></div>`
+    list.innerHTML = `<div class="hist-empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>No transactions yet</p><span>History appears after your first deposit</span></div>`
     return
   }
   list.innerHTML = [...txs].reverse().map(tx => {
-    const isD = tx.type==='deposit'
-    const d   = new Date(tx.time)
-    const dt  = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+    const isD = tx.type === 'deposit'
+    const dt  = new Date(tx.time)
+    const ds  = dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' ' + dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
     return `<div class="hist-item ${isD?'h-dep':'h-with'}">
-      <div class="hist-ico">
-        <svg viewBox="0 0 24 24">${isD ? '<path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/>' : '<path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/>'}</svg>
-      </div>
-      <div>
-        <div class="h-type">${isD?'Deposit':'Withdraw'}</div>
-        <div class="h-date">${dt}</div>
-      </div>
+      <div class="hist-ico"><svg viewBox="0 0 24 24">${isD ? '<path d="M12 2v12"/><path d="m5 9 7 7 7-7"/><path d="M5 20h14"/>' : '<path d="M12 22V10"/><path d="m19 15-7-7-7 7"/><path d="M5 4h14"/>'}</svg></div>
+      <div><div class="h-type">${isD?'Deposit':'Withdraw'}</div><div class="h-date">${ds}</div></div>
       <div class="h-right">
-        <div class="h-amt ${isD?'pos':'neg'}">${isD?'+':'-'}${parseFloat(tx.amount).toFixed(4)} TON</div>
+        <div class="h-amt ${isD?'pos':'neg'}">${isD?'+':'-'}${parseFloat(tx.amount).toFixed(4)} ${tx.asset||'TON'}</div>
         <div class="h-badge b-ok">Confirmed</div>
       </div>
     </div>`
   }).join('')
 }
 
-// ── COPY ──
+// COPY
 function cp(id, label) {
   const v = document.getElementById(id).textContent
-  if (v === '—' || v.includes('Generate')) { toast('Generate API key first','err'); return }
-  navigator.clipboard.writeText(v).then(()=>toast(label+' copied!','inf')).catch(()=>{
-    const ta=document.createElement('textarea'); ta.value=v
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy')
-    document.body.removeChild(ta); toast(label+' copied!','inf')
-  })
+  if (!v || v.includes('Generate') || v === '—') { toast('Generate API key first','err'); return }
+  copyText(v, label)
 }
 
-// ── DOCS ──
-function openDocs() { window.open('/docs','_blank') }
-
-// ── TOAST ──
-function toast(msg,type='inf') {
-  const t=document.getElementById('toast')
-  t.textContent=msg; t.className='toast '+type+' show'
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2800)
+function copyText(text, label) {
+  const fn = () => toast(label+' copied!','inf')
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(fn).catch(fallback)
+  else fallback()
+  function fallback() {
+    const ta = document.createElement('textarea')
+    ta.value = text; document.body.appendChild(ta); ta.select()
+    try { document.execCommand('copy'); fn() } catch(e) {}
+    document.body.removeChild(ta)
+  }
 }
 
-// ── SPIN KEYFRAME ──
-const style=document.createElement('style')
-style.textContent='@keyframes spin{to{transform:rotate(360deg)}}'
-document.head.appendChild(style)
+// BUTTON HELPERS
+function btnLoad(btn, txt) {
+  btn.disabled = true
+  btn.innerHTML = `<svg style="animation:spin .8s linear infinite;width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> ${txt}`
+}
+function btnReset(btn, html) { btn.disabled = false; btn.innerHTML = html }
+
+// TOAST
+function toast(msg, type='inf') {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.className = 'toast '+type+' show'
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), 2800)
+}
 </script>
 </body>
 </html>
