@@ -27,7 +27,7 @@ const { getHttpEndpoint } = require("@orbs-network/ton-access")
 // ================== HELPERS ==================
 
 function generateApiKey() {
-  return "tbl_" + Math.random().toString(36).substring(2, 10) +
+  return "safeora-" + Math.random().toString(36).substring(2, 10) +
     Math.random().toString(36).substring(2, 10)
 }
 
