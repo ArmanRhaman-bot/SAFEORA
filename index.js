@@ -371,44 +371,18 @@ app.post("/admin/add-balance", (req, res) => {
 // ══════════════════════════════════════════
 // DOCS PAGE
 // ══════════════════════════════════════════
+
+// Route 1: /docs → docs.html
 app.get("/docs", (req, res) => {
-  res.send(`<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>SAFEORA API Docs</title>
-<style>
-body{background:#07090f;color:#f1f5f9;font-family:monospace;padding:30px;max-width:700px;margin:auto}
-h1{color:#3b82f6;margin-bottom:4px}
-h2{color:#94a3b8;font-size:14px;margin-bottom:30px;font-weight:400}
-h3{color:#60a5fa;margin:24px 0 8px;font-size:16px}
-.ep{background:#0c1120;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;margin-bottom:12px}
-.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;margin-right:10px}
-.post{background:rgba(59,130,246,.15);color:#3b82f6}
-.get{background:rgba(34,197,94,.15);color:#22c55e}
-code{background:#1a2336;padding:2px 8px;border-radius:5px;color:#f59e0b;font-size:12px}
-p{color:#94a3b8;font-size:13px;margin-top:6px}
-pre{background:#0c1120;border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:10px;font-size:12px;overflow-x:auto;color:#e2e8f0}
-</style></head><body>
-<h1>SAFEORA API Documentation</h1>
-<h2>Base URL: https://safeora.onrender.com</h2>
-<h3>Authentication</h3>
-<p>Include your API key in the header: <code>x-api-key: YOUR_API_KEY</code></p>
-<h3>Admin Authentication</h3>
-<p>Include in header: <code>admin-secret: YOUR_ADMIN_SECRET</code></p>
-<h3>Endpoints</h3>
-<div class="ep"><span class="badge post">POST</span><strong>/api/register</strong><p>Register user & get API key. 48h lock after creation.</p>
-<pre>Body: { "user_id": "your_unique_id" }</pre></div>
-<div class="ep"><span class="badge get">GET</span><strong>/api/balance</strong><p>Get wallet balance.</p></div>
-<div class="ep"><span class="badge get">GET</span><strong>/api/deposit/info</strong><p>Get deposit address, memo & network details.</p></div>
-<div class="ep"><span class="badge post">POST</span><strong>/api/deposit/verify</strong><p>Verify & credit on-chain TON deposit.</p></div>
-<div class="ep"><span class="badge post">POST</span><strong>/api/withdraw</strong><p>Withdraw TON to external address.</p>
-<pre>Body: { "wallet": "EQ...", "amount": 0.5, "asset": "TON" }</pre></div>
-<div class="ep"><span class="badge get">GET</span><strong>/api/transactions</strong><p>Get last 50 transactions.</p></div>
-<div class="ep"><span class="badge get">GET</span><strong>/admin/settings</strong><p>Get all admin settings.</p></div>
-<div class="ep"><span class="badge post">POST</span><strong>/admin/settings</strong><p>Update min deposits, fees, prices etc.</p>
-<pre>Body: { "ton_min_deposit": 0.01, "ton_network_fee": 0.001, "ton_price_usd": 2.2 }</pre></div>
-<div class="ep"><span class="badge get">GET</span><strong>/admin/users</strong><p>List all users.</p></div>
-<div class="ep"><span class="badge post">POST</span><strong>/admin/add-balance</strong><p>Manually add balance to user.</p>
-<pre>Body: { "user_id": "uid", "amount": 5 }</pre></div>
-</body></html>`)
+  res.sendFile(path.join(__dirname, "docs.html"))
+})
+
+app.get("/wallet", (req, res) => {
+  res.sendFile(path.join(__dirname, "wallet.html"))
+})
+
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "admin.html"))
 })
 
 // ══════════════════════════════════════════
